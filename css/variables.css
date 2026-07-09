@@ -11,8 +11,9 @@
   --font-display: "Arial Black", "Inter", "Segoe UI", Arial, sans-serif;
 
   --container: 1180px;
-  --radius: 8px;
-  --shadow-soft: 0 18px 60px rgba(23, 23, 23, 0.12);
-  --shadow-card: 0 1px 0 rgba(23, 23, 23, 0.08);
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --radius: 7px;
+  --shadow-soft: 0 22px 70px rgba(23, 23, 23, 0.1);
+  --shadow-card: 0 1px 0 rgba(23, 23, 23, 0.08), 0 18px 44px rgba(23, 23, 23, 0.045);
+  --shadow-hover: 0 28px 80px rgba(23, 23, 23, 0.14);
+  --ease: cubic-bezier(0.19, 1, 0.22, 1);
 }

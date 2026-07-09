@@ -45,10 +45,10 @@
 
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(34px);
   transition:
-    opacity 700ms var(--ease),
-    transform 700ms var(--ease);
+    opacity 820ms var(--ease),
+    transform 820ms var(--ease);
 }
 
 .reveal.is-visible {
@@ -57,7 +57,7 @@
 }
 
 .hero__shape {
-  animation: floatShape 7s var(--ease) infinite;
+  animation: floatShape 8.5s var(--ease) infinite;
 }
 
 .ticker__track {
