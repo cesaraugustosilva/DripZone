@@ -28,6 +28,12 @@ img {
   max-width: 100%;
 }
 
+img.is-broken {
+  object-fit: contain;
+  padding: 18px;
+  background: rgba(23, 23, 23, 0.04);
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

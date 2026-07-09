@@ -7,11 +7,11 @@ const state = {
   sort: "recent"
 };
 
-const formatPrice = (price) =>
-  price.toLocaleString("pt-BR", {
+const formatPrice = window.DripZoneUtils?.formatPrice || ((price) =>
+  Number(price || 0).toLocaleString("pt-BR", {
     style: "currency",
     currency: "BRL"
-  });
+  }));
 
 function getFilteredProducts() {
   const normalizedSearch = state.search.trim().toLowerCase();
@@ -33,7 +33,7 @@ function createProductCard(product) {
     .join("");
 
   return `
-    <a class="product-card catalog-product" href="produto.html?id=${product.id}" aria-label="Ver produto ${product.name}">
+    <a class="product-card catalog-product" href="produto.html?id=${encodeURIComponent(product.id)}" aria-label="Ver produto ${product.name}">
       <div class="product-card__media">
         <img src="${product.image}" alt="${product.name}" loading="lazy" />
         <span class="badge-stack">${badges}</span>
@@ -77,6 +77,13 @@ function initCatalog() {
   const priceOutput = document.querySelector("[data-price-output]");
   const sort = document.querySelector("[data-sort]");
   const clear = document.querySelector("[data-clear-filters]");
+  const params = new URLSearchParams(window.location.search);
+  const initialSearch = params.get("busca") || params.get("q") || "";
+
+  if (initialSearch) {
+    state.search = initialSearch.slice(0, 80);
+    if (search) search.value = state.search;
+  }
 
   document.querySelectorAll("[data-category]").forEach((button) => {
     button.addEventListener("click", () => {

@@ -2,7 +2,7 @@ function initScrollReveal() {
   const elements = document.querySelectorAll(".reveal");
   if (!elements.length) return;
 
-  if (!("IntersectionObserver" in window)) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
     elements.forEach((element) => element.classList.add("is-visible"));
     return;
   }
@@ -24,14 +24,26 @@ function initScrollReveal() {
 
 function initParallax() {
   const media = document.querySelector("[data-parallax]");
-  if (!media) return;
+  if (!media || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  let ticking = false;
 
   const update = () => {
     const offset = Math.min(window.scrollY * 0.08, 46);
     media.style.transform = `translateY(${offset}px) scale(1.04)`;
   };
 
-  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
+    },
+    { passive: true }
+  );
   update();
 }
 

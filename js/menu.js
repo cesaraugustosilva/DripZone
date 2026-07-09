@@ -2,6 +2,7 @@ function initMenu() {
   const header = document.querySelector("[data-header]");
   const toggle = document.querySelector("[data-menu-toggle]");
   const menu = document.querySelector("[data-mobile-menu]");
+  let ticking = false;
 
   if (!header || !toggle || !menu) return;
 
@@ -37,10 +38,21 @@ function initMenu() {
     link.addEventListener("click", closeMenu);
   });
 
-  window.addEventListener("scroll", setScrolled, { passive: true });
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        setScrolled();
+        ticking = false;
+      });
+    },
+    { passive: true }
+  );
   window.addEventListener("resize", () => {
     if (window.innerWidth > 900) closeMenu();
-  });
+  }, { passive: true });
 
   setScrolled();
 }

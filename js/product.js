@@ -1,12 +1,15 @@
-const productFormatPrice = (price) =>
-  price.toLocaleString("pt-BR", {
+const productFormatPrice = window.DripZoneUtils?.formatPrice || ((price) =>
+  Number(price || 0).toLocaleString("pt-BR", {
     style: "currency",
     currency: "BRL"
-  });
+  }));
+const productPublicUrl = window.DripZoneUtils?.publicUrl || ((path = "") => `https://dripzone.com.br/${String(path).replace(/^(\.\.\/)+/, "")}`);
+const PRODUCT_ID_PATTERN = /^[a-z0-9-]+$/;
 
 function getProductIdFromUrl() {
   const params = new URLSearchParams(window.location.search);
-  return params.get("id") || "oversized-signal-tee";
+  const id = params.get("id") || "";
+  return PRODUCT_ID_PATTERN.test(id) ? id : "oversized-signal-tee";
 }
 
 function getCurrentProduct() {
@@ -80,7 +83,7 @@ function renderRelated(product) {
       (item) => {
         const badges = (item.badges || [item.tag]).map((badge) => `<span class="product-badge">${badge}</span>`).join("");
         return `
-        <a class="product-card catalog-product" href="produto.html?id=${item.id}" aria-label="Ver produto ${item.name}">
+        <a class="product-card catalog-product" href="produto.html?id=${encodeURIComponent(item.id)}" aria-label="Ver produto ${item.name}">
           <div class="product-card__media">
             <img src="${item.image}" alt="${item.name}" loading="lazy" />
             <span class="badge-stack">${badges}</span>
@@ -98,6 +101,94 @@ function renderRelated(product) {
       }
     )
     .join("");
+}
+
+function setMeta(selector, attribute, value) {
+  const element = document.querySelector(selector);
+  if (element) element.setAttribute(attribute, value);
+}
+
+function upsertJsonLd(id, data) {
+  let script = document.getElementById(id);
+  if (!script) {
+    script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.id = id;
+    document.head.appendChild(script);
+  }
+
+  script.textContent = JSON.stringify(data);
+}
+
+function renderProductStructuredData(product) {
+  const productUrl = productPublicUrl(`pages/produto.html?id=${encodeURIComponent(product.id)}`);
+  const productImage = productPublicUrl(product.image);
+
+  upsertJsonLd("product-json-ld", {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Product",
+        "@id": `${productUrl}#product`,
+        "name": product.name,
+        "description": product.description,
+        "image": productImage,
+        "brand": {
+          "@type": "Brand",
+          "name": "DripZone"
+        },
+        "category": product.category,
+        "offers": {
+          "@type": "Offer",
+          "url": productUrl,
+          "priceCurrency": "BRL",
+          "price": product.price.toFixed(2),
+          "availability": "https://schema.org/InStock",
+          "itemCondition": "https://schema.org/NewCondition"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Início",
+            "item": "https://dripzone.com.br/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Catálogo",
+            "item": "https://dripzone.com.br/pages/catalogo.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": product.name,
+            "item": productUrl
+          }
+        ]
+      }
+    ]
+  });
+}
+
+function updateProductMeta(product) {
+  const productUrl = productPublicUrl(`pages/produto.html?id=${encodeURIComponent(product.id)}`);
+  const productImage = productPublicUrl(product.image);
+  const description = `${product.name} da DripZone: ${product.description}`;
+
+  document.title = `${product.name} | DripZone`;
+  setMeta('meta[name="description"]', "content", description);
+  setMeta('meta[property="og:title"]', "content", `${product.name} | DripZone`);
+  setMeta('meta[property="og:description"]', "content", description);
+  setMeta('meta[property="og:url"]', "content", productUrl);
+  setMeta('meta[property="og:image"]', "content", productImage);
+  setMeta('meta[name="twitter:title"]', "content", `${product.name} | DripZone`);
+  setMeta('meta[name="twitter:description"]', "content", description);
+  setMeta('meta[name="twitter:image"]', "content", productImage);
+  setMeta('link[rel="canonical"]', "href", productUrl);
 }
 
 function initQuantityControls() {
@@ -125,7 +216,7 @@ function initProductPage() {
   const product = getCurrentProduct();
   if (!product) return;
 
-  document.title = `${product.name} | DripZone`;
+  updateProductMeta(product);
   setText("[data-product-category]", product.category);
   setText("[data-product-name]", product.name);
   setText("[data-product-price]", productFormatPrice(product.price));
@@ -134,6 +225,7 @@ function initProductPage() {
   renderGallery(product);
   renderSizes(product);
   renderRelated(product);
+  renderProductStructuredData(product);
   initQuantityControls();
 
   document.querySelector("[data-product-form]")?.addEventListener("submit", (event) => {

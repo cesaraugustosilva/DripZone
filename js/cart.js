@@ -8,11 +8,11 @@ let lastCartTrigger = null;
 const SHIPPING_PRICE = 19.9;
 const FREE_SHIPPING_FROM = 299;
 
-const cartFormatPrice = (price) =>
-  price.toLocaleString("pt-BR", {
+const cartFormatPrice = window.DripZoneUtils?.formatPrice || ((price) =>
+  Number(price || 0).toLocaleString("pt-BR", {
     style: "currency",
     currency: "BRL"
-  });
+  }));
 
 function getProducts() {
   return window.DripZoneProducts || [];
@@ -115,9 +115,10 @@ function addToCart({ productId, size, quantity }) {
 
   const key = `${product.id}-${size}`;
   const existing = cartState.items.find((item) => item.key === key);
+  const safeQuantity = Math.min(Math.max(Number(quantity) || 1, 1), 10);
 
   if (existing) {
-    existing.quantity += quantity;
+    existing.quantity = Math.min(existing.quantity + safeQuantity, 10);
   } else {
     cartState.items.push({
       key,
@@ -126,7 +127,7 @@ function addToCart({ productId, size, quantity }) {
       price: product.price,
       image: product.image,
       size,
-      quantity
+      quantity: safeQuantity
     });
   }
 

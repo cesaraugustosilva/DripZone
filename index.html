@@ -10,23 +10,71 @@
     <meta property="og:title" content="DripZone | Streetwear Premium" />
     <meta property="og:description" content="Drops exclusivos para quem vive streetwear com presença." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="img/logo/dripzone-logo.png" />
+    <meta property="og:url" content="https://dripzone.com.br/" />
+    <meta property="og:image" content="https://dripzone.com.br/img/logo/dripzone-logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="DripZone | Streetwear Premium" />
+    <meta name="twitter:description" content="Drops exclusivos para quem vive streetwear com presença." />
+    <meta name="twitter:image" content="https://dripzone.com.br/img/logo/dripzone-logo.png" />
+    <meta name="theme-color" content="#171717" />
     <title>DripZone | Streetwear Premium</title>
     <link rel="preload" href="img/logo/dripzone-logo.png" as="image" />
+    <link rel="preload" href="img/hero/dripzone-hero.svg" as="image" />
+    <link rel="canonical" href="https://dripzone.com.br/" />
+    <link rel="manifest" href="manifest.json" />
     <link rel="icon" href="img/logo/dripzone-logo.png" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/responsive.css" />
+    <script src="js/site.js" defer></script>
     <script src="js/menu.js" defer></script>
     <script src="js/slider.js" defer></script>
     <script src="js/animations.js" defer></script>
     <script src="js/main.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://dripzone.com.br/#organization",
+            "name": "DripZone",
+            "url": "https://dripzone.com.br/",
+            "logo": "https://dripzone.com.br/img/logo/dripzone-logo.png",
+            "sameAs": []
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://dripzone.com.br/#website",
+            "url": "https://dripzone.com.br/",
+            "name": "DripZone",
+            "publisher": { "@id": "https://dripzone.com.br/#organization" },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://dripzone.com.br/pages/catalogo.html?busca={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Início",
+                "item": "https://dripzone.com.br/"
+              }
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <header class="site-header" data-header>
       <div class="topbar">Frete grátis acima de R$299 / Drop limitado disponível</div>
       <nav class="nav container" aria-label="Menu principal">
         <a class="brand" href="#inicio" aria-label="DripZone, voltar ao início">
-          <span class="brand__mark"><img src="img/logo/dripzone-logo.png" alt="Logo DripZone" /></span>
+          <span class="brand__mark"><img src="img/logo/dripzone-logo.png" alt="Logo DripZone" width="96" height="96" /></span>
           <span class="brand__name">DripZone</span>
         </a>
 
@@ -81,7 +129,7 @@
     <main>
       <section class="hero" id="inicio">
         <div class="hero__media">
-          <img src="img/hero/dripzone-hero.svg" alt="Editorial streetwear futurista da DripZone" data-parallax />
+          <img src="img/hero/dripzone-hero.svg" alt="Editorial streetwear futurista da DripZone" fetchpriority="high" data-parallax />
           <span class="hero__overlay"></span>
           <span class="hero__fade"></span>
         </div>
