@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Produto DripZone com galeria, tamanhos e carrinho lateral." />
+    <meta property="og:title" content="Produto | DripZone" />
+    <title>Produto | DripZone</title>
+    <link rel="preload" href="../img/logo/dripzone-logo.png" as="image" />
+    <link rel="icon" href="../img/logo/dripzone-logo.png" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+    <script src="../js/products-data.js" defer></script>
+    <script src="../js/cart.js" defer></script>
+    <script src="../js/product.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header is-scrolled">
+      <div class="topbar">Frete grátis acima de R$299 / Drop limitado disponível</div>
+      <nav class="nav container" aria-label="Menu principal">
+        <a class="brand" href="../index.html" aria-label="DripZone, voltar ao início">
+          <span class="brand__mark"><img src="../img/logo/dripzone-logo.png" alt="Logo DripZone" /></span>
+          <span class="brand__name">DripZone</span>
+        </a>
+        <div class="nav__links nav__links--page">
+          <a href="../index.html">Início</a>
+          <a href="catalogo.html">Catálogo</a>
+          <a href="sobre.html">Sobre</a>
+          <a href="contato.html">Contato</a>
+        </div>
+        <button class="btn btn--neon btn--icon cart-trigger" type="button" data-cart-open aria-label="Abrir carrinho">
+          <img src="../img/icones/bag.svg" alt="" aria-hidden="true" />
+          <span class="cart-count" data-cart-count aria-live="polite">0</span>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="product-page container" data-product-root>
+        <div class="product-gallery" aria-label="Galeria do produto">
+          <div class="product-gallery__main">
+            <img src="../img/produtos/produto-01.svg" alt="" data-product-main-image />
+          </div>
+          <div class="product-gallery__thumbs" data-product-thumbs></div>
+        </div>
+
+        <article class="product-detail">
+          <p class="section__eyebrow" data-product-category>Categoria</p>
+          <h1 data-product-name>Carregando produto</h1>
+          <p class="product-detail__price" data-product-price>R$ 0,00</p>
+          <p class="product-detail__description" data-product-description>
+            Preparando os detalhes da peça selecionada.
+          </p>
+
+          <form class="product-buy" data-product-form>
+            <fieldset class="product-sizes">
+              <legend>Tamanho</legend>
+              <div class="product-sizes__options" data-product-sizes></div>
+            </fieldset>
+
+            <div class="product-quantity">
+              <label for="product-qty">Quantidade</label>
+              <div class="quantity-control">
+                <button type="button" data-product-qty-minus aria-label="Diminuir quantidade">-</button>
+                <input id="product-qty" type="number" min="1" max="10" value="1" data-product-qty />
+                <button type="button" data-product-qty-plus aria-label="Aumentar quantidade">+</button>
+              </div>
+            </div>
+
+            <button class="btn btn--neon product-add" type="submit">Adicionar ao carrinho</button>
+          </form>
+        </article>
+      </section>
+
+      <section class="section related-section">
+        <div class="container">
+          <div class="section__head">
+            <p class="section__eyebrow">Relacionados</p>
+            <h2 class="section__title">Complete o fit.</h2>
+          </div>
+          <div class="catalog-grid" data-related-products></div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="cart-drawer" data-cart-drawer aria-hidden="true" aria-label="Carrinho lateral" inert>
+      <div class="cart-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+        <div class="cart-drawer__head">
+          <div>
+            <p class="section__eyebrow">Carrinho</p>
+            <h2 id="cart-title">Seu drop</h2>
+          </div>
+          <button class="btn btn--dark btn--icon" type="button" data-cart-close aria-label="Fechar carrinho">&times;</button>
+        </div>
+        <div class="cart-items" data-cart-items></div>
+        <div class="cart-empty" data-cart-empty>
+          <strong>Seu drop está vazio.</strong>
+          <span>Escolha uma peça e ela aparece aqui em segundos.</span>
+        </div>
+        <div class="cart-drawer__footer">
+          <div class="cart-subtotal">
+            <span>Subtotal</span>
+            <strong data-cart-subtotal>R$ 0,00</strong>
+          </div>
+          <div class="cart-subtotal">
+            <span>Frete fictício</span>
+            <strong data-cart-shipping>R$ 0,00</strong>
+          </div>
+          <div class="cart-subtotal cart-total">
+            <span>Total</span>
+            <strong data-cart-total>R$ 0,00</strong>
+          </div>
+          <button class="btn btn--light" type="button" data-cart-continue>Continuar comprando</button>
+          <button class="btn btn--neon" type="button" aria-label="Finalizar compra do carrinho">Finalizar compra</button>
+        </div>
+      </div>
+    </aside>
+  </body>
+</html>

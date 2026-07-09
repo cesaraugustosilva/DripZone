@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-label="Editorial streetwear futurista DripZone">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#ffffff"/>
+      <stop offset=".48" stop-color="#d9d9d9"/>
+      <stop offset="1" stop-color="#171717"/>
+    </linearGradient>
+    <linearGradient id="neon" x1="0" x2="1">
+      <stop stop-color="#39ff88"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <path d="M980 0h620v1000H840c148-204 227-397 236-579C1084 260 1052 119 980 0Z" fill="#0c0c0c"/>
+  <path d="M1040 130c144 34 250 158 262 310 16 195-119 366-302 398-190 34-371-99-401-290-31-197 104-382 301-412 49-7 95-9 140-6Z" fill="#f7f7f7" opacity=".16"/>
+  <path d="M971 172c95 42 160 135 171 242l28 272H842l28-274c9-108 5-188 101-240Z" fill="#f5f5f5"/>
+  <path d="M850 416h345l-22 277c-4 53-49 94-103 94H962c-54 0-99-41-103-95l-9-276Z" fill="#171717"/>
+  <path d="M926 310h192l33 118H894l32-118Z" fill="#a3a3a3"/>
+  <path d="M900 690h245l-25 114H927l-27-114Z" fill="#050505"/>
+  <circle cx="1020" cy="244" r="70" fill="#171717"/>
+  <path d="M680 320c-110 20-198 90-250 192" stroke="#39ff88" stroke-width="18" stroke-linecap="round" opacity=".85"/>
+  <path d="M1264 640c58-40 96-90 114-151" stroke="#39ff88" stroke-width="12" stroke-linecap="round" opacity=".76"/>
+  <text x="96" y="820" fill="#171717" font-family="Arial Black, Arial" font-size="86">DRIPZONE</text>
+  <text x="102" y="882" fill="#171717" font-family="Arial, sans-serif" font-size="28" font-weight="700">PREMIUM STREETWEAR DROP</text>
+  <rect x="98" y="904" width="240" height="10" fill="url(#neon)"/>
+</svg>
