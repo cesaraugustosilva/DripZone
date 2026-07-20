@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "updatedAt": "2026-07-15T20:18:47.492Z",
+  "collections": [
+    {
+      "id": "ver-todos",
+      "name": "Ver Todos",
+      "slug": "ver-todos",
+      "aliases": []
+    },
+    {
+      "id": "oversized",
+      "name": "Oversized",
+      "slug": "oversized",
+      "aliases": []
+    },
+    {
+      "id": "verao",
+      "name": "Verão",
+      "slug": "verao",
+      "aliases": []
+    },
+    {
+      "id": "inverno",
+      "name": "Inverno",
+      "slug": "inverno",
+      "aliases": []
+    },
+    {
+      "id": "lancamentos",
+      "name": "Lançamentos",
+      "slug": "lancamentos",
+      "aliases": []
+    }
+  ]
+}

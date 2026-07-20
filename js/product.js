@@ -9,13 +9,13 @@ const PRODUCT_ID_PATTERN = /^[a-z0-9-]+$/;
 function getProductIdFromUrl() {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id") || "";
-  return PRODUCT_ID_PATTERN.test(id) ? id : "oversized-signal-tee";
+  return PRODUCT_ID_PATTERN.test(id) ? id : null;
 }
 
 function getCurrentProduct() {
   const products = window.DripZoneProducts || [];
   const id = getProductIdFromUrl();
-  return products.find((product) => product.id === id) || products[0];
+  return id ? products.find((product) => product.id === id) || null : null;
 }
 
 function setText(selector, text) {
@@ -71,6 +71,7 @@ function renderSizes(product) {
 
 function renderRelated(product) {
   const relatedGrid = document.querySelector("[data-related-products]");
+  const relatedSection = document.querySelector(".related-section");
   const products = window.DripZoneProducts || [];
   if (!relatedGrid) return;
 
@@ -78,12 +79,21 @@ function renderRelated(product) {
   const otherProducts = products.filter((item) => item.id !== product.id && item.category !== product.category);
   const related = [...sameCategory, ...otherProducts].slice(0, 3);
 
+  if (related.length === 0) {
+    if (relatedSection) {
+      relatedSection.hidden = true;
+      relatedSection.style.display = "none";
+    }
+    relatedGrid.innerHTML = "";
+    return;
+  }
+
   relatedGrid.innerHTML = related
     .map(
       (item) => {
         const badges = (item.badges || [item.tag]).map((badge) => `<span class="product-badge">${badge}</span>`).join("");
         return `
-        <a class="product-card catalog-product" href="produto.html?id=${encodeURIComponent(item.id)}" aria-label="Ver produto ${item.name}">
+        <a class="product-card catalog-product" href="?id=${encodeURIComponent(item.id)}" aria-label="Ver produto ${item.name}">
           <div class="product-card__media">
             <img src="${item.image}" alt="${item.name}" loading="lazy" />
             <span class="badge-stack">${badges}</span>
@@ -121,7 +131,7 @@ function upsertJsonLd(id, data) {
 }
 
 function renderProductStructuredData(product) {
-  const productUrl = productPublicUrl(`pages/produto.html?id=${encodeURIComponent(product.id)}`);
+  const productUrl = productPublicUrl(`pages/produto/?id=${encodeURIComponent(product.id)}`);
   const productImage = productPublicUrl(product.image);
 
   upsertJsonLd("product-json-ld", {
@@ -160,7 +170,7 @@ function renderProductStructuredData(product) {
             "@type": "ListItem",
             "position": 2,
             "name": "Catálogo",
-            "item": "https://dripzone.com.br/pages/catalogo.html"
+            "item": "https://dripzone.com.br/pages/catalogo/"
           },
           {
             "@type": "ListItem",
@@ -175,7 +185,7 @@ function renderProductStructuredData(product) {
 }
 
 function updateProductMeta(product) {
-  const productUrl = productPublicUrl(`pages/produto.html?id=${encodeURIComponent(product.id)}`);
+  const productUrl = productPublicUrl(`pages/produto/?id=${encodeURIComponent(product.id)}`);
   const productImage = productPublicUrl(product.image);
   const description = `${product.name} da DripZone: ${product.description}`;
 
@@ -189,6 +199,50 @@ function updateProductMeta(product) {
   setMeta('meta[name="twitter:description"]', "content", description);
   setMeta('meta[name="twitter:image"]', "content", productImage);
   setMeta('link[rel="canonical"]', "href", productUrl);
+}
+
+function updateNotFoundMeta() {
+  const productUrl = productPublicUrl("pages/produto/");
+  const description = "Produto não encontrado no catálogo da DripZone.";
+
+  document.title = "Produto não encontrado | DripZone";
+  setMeta('meta[name="description"]', "content", description);
+  setMeta('meta[property="og:title"]', "content", "Produto não encontrado | DripZone");
+  setMeta('meta[property="og:description"]', "content", description);
+  setMeta('meta[property="og:url"]', "content", productUrl);
+  setMeta('meta[name="twitter:title"]', "content", "Produto não encontrado | DripZone");
+  setMeta('meta[name="twitter:description"]', "content", description);
+  setMeta('link[rel="canonical"]', "href", productUrl);
+  document.getElementById("product-json-ld")?.remove();
+}
+
+function hideProductSection(selector) {
+  const element = document.querySelector(selector);
+  if (!element) return;
+
+  element.hidden = true;
+  element.style.display = "none";
+}
+
+function renderProductNotFound() {
+  updateNotFoundMeta();
+
+  hideProductSection(".product-gallery");
+  hideProductSection(".related-section");
+  hideProductSection("[data-product-form]");
+
+  const detail = document.querySelector(".product-detail");
+  if (!detail) return;
+
+  detail.classList.add("product-detail--not-found");
+  detail.innerHTML = `
+    <p class="section__eyebrow">Produto não encontrado</p>
+    <h1>Produto não encontrado</h1>
+    <p class="product-detail__description">
+      O item solicitado não existe no catálogo atual ou o link usado está incompleto.
+    </p>
+    <a class="btn btn--neon product-add" href="../catalogo/">Voltar ao catálogo</a>
+  `;
 }
 
 function initQuantityControls() {
@@ -212,9 +266,14 @@ function initQuantityControls() {
   });
 }
 
-function initProductPage() {
+async function initProductPage() {
+  await (window.DripZoneProductsReady || Promise.resolve());
+
   const product = getCurrentProduct();
-  if (!product) return;
+  if (!product) {
+    renderProductNotFound();
+    return;
+  }
 
   updateProductMeta(product);
   setText("[data-product-category]", product.category);

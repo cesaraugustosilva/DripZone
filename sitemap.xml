@@ -5,59 +5,23 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://dripzone.com.br/pages/catalogo.html</loc>
+    <loc>https://dripzone.com.br/pages/home/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://dripzone.com.br/pages/catalogo/</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://dripzone.com.br/pages/produto.html</loc>
+    <loc>https://dripzone.com.br/pages/produto/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://dripzone.com.br/pages/produto.html?id=oversized-signal-tee</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dripzone.com.br/pages/produto.html?id=cargo-neon-line</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dripzone.com.br/pages/produto.html?id=hoodie-chrome-dz</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dripzone.com.br/pages/produto.html?id=tech-short-future</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dripzone.com.br/pages/produto.html?id=mesh-cap-zone</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dripzone.com.br/pages/produto.html?id=track-pants-motion</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dripzone.com.br/pages/produto.html?id=boxy-tee-asphalt</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dripzone.com.br/pages/produto.html?id=zip-hoodie-pulse</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dripzone.com.br/pages/produto.html?id=minimal-core-tee</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dripzone.com.br/pages/produto.html?id=chrome-bucket-hat</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dripzone.com.br/pages/sobre.html</loc>
+    <loc>https://dripzone.com.br/pages/sobre/</loc>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://dripzone.com.br/pages/contato.html</loc>
+    <loc>https://dripzone.com.br/pages/contato/</loc>
     <priority>0.6</priority>
   </url>
 </urlset>

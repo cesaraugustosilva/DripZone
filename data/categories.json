@@ -1,0 +1,142 @@
+{
+  "version": 1,
+  "updatedAt": "2026-07-16T21:19:48.086Z",
+  "clothing": [
+    {
+      "id": "roupas-camisetas",
+      "name": "Camisetas",
+      "slug": "camisetas",
+      "aliases": [
+        "T-shirts",
+        "Tees"
+      ],
+      "parentId": "roupas",
+      "categoryId": "camisetas"
+    },
+    {
+      "id": "moletons-jaquetas",
+      "name": "Moletons / Jaquetas",
+      "slug": "moletons-jaquetas",
+      "aliases": [
+        "Moletons",
+        "Jaquetas",
+        "Hoodies",
+        "Jackets",
+        "Jaquetas / Moletons"
+      ],
+      "parentId": "roupas"
+    },
+    {
+      "id": "roupas-shorts",
+      "name": "Shorts",
+      "slug": "shorts",
+      "aliases": [
+        "Bermudas"
+      ],
+      "parentId": "roupas",
+      "categoryId": "shorts"
+    },
+    {
+      "id": "roupas-calcas",
+      "name": "Calças",
+      "slug": "calcas",
+      "aliases": [
+        "Pants",
+        "Cargo"
+      ],
+      "parentId": "roupas",
+      "categoryId": "calcas"
+    },
+    {
+      "id": "todos-os-produtos",
+      "name": "Todos os Produtos",
+      "slug": "todos-os-produtos",
+      "aliases": [
+        "Loja",
+        "Todos Produtos"
+      ],
+      "parentId": "roupas"
+    }
+  ],
+  "all": [
+    {
+      "id": "acessorios",
+      "slug": "acessorios",
+      "aliases": [],
+      "active": true,
+      "name": "Acessórios"
+    },
+    {
+      "id": "calcas",
+      "slug": "calcas",
+      "aliases": [
+        "Pants",
+        "Cargo"
+      ],
+      "active": true,
+      "name": "Calças"
+    },
+    {
+      "id": "camisetas",
+      "slug": "camisetas",
+      "aliases": [
+        "T-shirts",
+        "Tees"
+      ],
+      "active": true,
+      "name": "Camisetas"
+    },
+    {
+      "id": "conjuntos",
+      "slug": "conjuntos",
+      "aliases": [
+        "Kits"
+      ],
+      "active": true,
+      "name": "Conjuntos"
+    },
+    {
+      "id": "jaquetas",
+      "slug": "jaquetas",
+      "aliases": [
+        "Jackets",
+        "Jaquetas / Moletons"
+      ],
+      "active": true,
+      "name": "Jaquetas"
+    },
+    {
+      "id": "moletons",
+      "slug": "moletons",
+      "aliases": [
+        "Hoodies",
+        "Moletom"
+      ],
+      "active": true,
+      "name": "Moletons"
+    },
+    {
+      "id": "shorts",
+      "slug": "shorts",
+      "aliases": [
+        "Bermudas"
+      ],
+      "active": true,
+      "name": "Shorts"
+    },
+    {
+      "id": "sneakers",
+      "slug": "sneakers",
+      "aliases": [],
+      "active": true,
+      "name": "Sneakers"
+    },
+    {
+      "id": "todos-os-produtos",
+      "slug": "todos-os-produtos",
+      "aliases": [],
+      "active": true,
+      "name": "Todos os Produtos"
+    }
+  ]
+}

@@ -13,6 +13,7 @@ const cartFormatPrice = window.DripZoneUtils?.formatPrice || ((price) =>
     style: "currency",
     currency: "BRL"
   }));
+const cartAssetPath = window.DripZoneUtils?.assetPath || ((path) => path);
 
 function getProducts() {
   return window.DripZoneProducts || [];
@@ -23,6 +24,15 @@ function loadCart() {
     cartState.items = JSON.parse(localStorage.getItem(CART_KEY)) || [];
   } catch {
     cartState.items = [];
+  }
+}
+
+function sanitizeCartItems() {
+  const validProductIds = new Set(getProducts().map((product) => product.id));
+  const validItems = cartState.items.filter((item) => item && validProductIds.has(item.id));
+  if (validItems.length !== cartState.items.length) {
+    cartState.items = validItems;
+    saveCart();
   }
 }
 
@@ -55,19 +65,27 @@ function renderCart() {
   const shipping = document.querySelector("[data-cart-shipping]");
   const total = document.querySelector("[data-cart-total]");
   const count = document.querySelector("[data-cart-count]");
+  const checkout = document.querySelector("[data-cart-checkout]");
+  const checkoutMessage = document.querySelector("[data-cart-checkout-message]");
+  const hasItems = cartState.items.length > 0;
 
   if (count) count.textContent = String(getCartTotalQuantity());
   if (subtotal) subtotal.textContent = cartFormatPrice(getCartSubtotal());
   if (shipping) shipping.textContent = cartFormatPrice(getCartShipping());
   if (total) total.textContent = cartFormatPrice(getCartSubtotal() + getCartShipping());
+  if (checkout) checkout.disabled = !hasItems;
+  if (!hasItems && checkoutMessage) {
+    checkoutMessage.hidden = true;
+    checkoutMessage.textContent = "";
+  }
   if (!itemsContainer || !empty) return;
 
-  empty.hidden = cartState.items.length > 0;
+  empty.hidden = hasItems;
   itemsContainer.innerHTML = cartState.items
     .map(
       (item) => `
         <article class="cart-item">
-          <img src="${item.image}" alt="${item.name}" />
+          <img src="${cartAssetPath(item.image)}" alt="${item.name}" />
           <div class="cart-item__body">
             <div>
               <h3>${item.name}</h3>
@@ -165,8 +183,26 @@ function removeCartItem(key) {
   }, itemElement ? 220 : 0);
 }
 
-function initCart() {
+function handleCheckout() {
+  if (cartState.items.length === 0) return;
+
+  const message = document.querySelector("[data-cart-checkout-message]");
+  if (!message) return;
+
+  message.textContent = "Finalização de pedido em breve. Seu carrinho foi mantido.";
+  message.hidden = false;
+}
+
+async function initCart() {
   loadCart();
+  if (window.DripZoneProductsReady) {
+    try {
+      await window.DripZoneProductsReady;
+    } catch {
+      window.DripZoneProducts = [];
+    }
+  }
+  sanitizeCartItems();
   renderCart();
 
   document.querySelectorAll("[data-cart-open]").forEach((button) => {
@@ -178,6 +214,7 @@ function initCart() {
 
   document.querySelector("[data-cart-close]")?.addEventListener("click", closeCart);
   document.querySelector("[data-cart-continue]")?.addEventListener("click", closeCart);
+  document.querySelector("[data-cart-checkout]")?.addEventListener("click", handleCheckout);
   document.querySelector("[data-cart-drawer]")?.addEventListener("click", (event) => {
     if (event.target instanceof Element && event.target.matches("[data-cart-drawer]")) closeCart();
   });

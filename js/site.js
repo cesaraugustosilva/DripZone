@@ -20,9 +20,27 @@ function dzPublicUrl(path = "") {
   return `${DRIPZONE_SITE_URL}/${cleanPath}`;
 }
 
+function dzRootPrefix() {
+  const pathname = window.location.pathname.replace(/\\/g, "/");
+  const pagesIndex = pathname.indexOf("/pages/");
+  if (pagesIndex === -1) return "";
+
+  const afterPages = pathname.slice(pagesIndex + "/pages/".length);
+  const segments = afterPages.split("/").filter(Boolean);
+  const pageDepth = segments.at(-1)?.includes(".") ? segments.length - 1 : segments.length;
+  return "../".repeat(pageDepth + 1);
+}
+
 function dzAssetPath(path) {
-  const isPage = window.location.pathname.includes("/pages/");
-  return `${isPage ? "../" : ""}${path}`;
+  const value = String(path || "");
+  if (/^(https?:|data:|blob:)/.test(value)) return value;
+
+  const cleanPath = value.replace(/^(\.\.\/)+/, "").replace(/^\.\//, "").replace(/^\/+/, "");
+  return `${dzRootPrefix()}${cleanPath}`;
+}
+
+function dzRoute(path = "") {
+  return `${dzRootPrefix()}${String(path).replace(/^\/+/, "")}`;
 }
 
 function initImageFallbacks() {
@@ -57,6 +75,8 @@ window.DripZoneUtils = {
   assetPath: dzAssetPath,
   formatPrice: dzFormatPrice,
   publicUrl: dzPublicUrl,
+  rootPrefix: dzRootPrefix,
+  route: dzRoute,
   siteUrl: DRIPZONE_SITE_URL
 };
 
