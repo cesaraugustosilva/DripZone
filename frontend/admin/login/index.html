@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Login | DripZone Admin</title>
+    <link rel="stylesheet" href="/admin/css/admin.css" />
+    <link rel="stylesheet" href="/admin/css/responsive.css" />
+    <link rel="stylesheet" href="/admin/css/theme.css" />
+    <script type="module" src="./js/auth.js?v=api-base-3000-20260730"></script>
+  </head>
+  <body>
+    <main class="admin-login">
+      <section class="admin-card admin-login-card">
+        <div class="admin-brand"><span class="admin-brand__mark">DZ</span><div><strong>DripZone Admin</strong><span>Modo de desenvolvimento</span></div></div>
+        <p class="admin-badge admin-badge--success">Autenticacao administrativa conectada.</p>
+        <form class="admin-form" data-login-form>
+          <div class="admin-field"><label for="admin-email">E-mail</label><input id="admin-email" type="email" autocomplete="email" required /></div>
+          <div class="admin-field"><label for="admin-password">Senha</label><input id="admin-password" type="password" autocomplete="current-password" required /><button class="admin-button admin-button--ghost" type="button" data-toggle-password aria-pressed="false">Mostrar</button></div>
+          <button class="admin-button admin-button--primary" type="submit">Entrar</button>
+          <p class="admin-help">Use as credenciais do administrador cadastrado. A sessao e validada pelo backend local.</p>
+        </form>
+      </section>
+    </main>
+    <div class="admin-toast-region" data-toast-region aria-live="polite" aria-label="Notificações"></div>
+  </body>
+</html>

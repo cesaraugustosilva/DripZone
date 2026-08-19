@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Novo produto | DripZone Admin</title>
+    <link rel="stylesheet" href="/admin/css/admin.css" />
+    <link rel="stylesheet" href="/admin/css/responsive.css" />
+    <link rel="stylesheet" href="/admin/css/theme.css" />
+    <script type="module" src="./js/product-form.js?v=api-base-3000-20260730"></script>
+  </head>
+  <body>
+    <div class="admin-app">
+      <aside class="admin-sidebar" id="admin-sidebar" data-admin-sidebar><div class="admin-brand"><span class="admin-brand__mark">DZ</span><div><strong>DripZone Admin</strong><span>Produto</span></div></div><nav class="admin-nav" data-admin-nav></nav><div class="admin-sidebar__foot"><a class="admin-store-link" href="/pages/home/">Ver loja</a><button class="admin-button admin-button--ghost" type="button" data-backend-action>Sair</button><button class="admin-button admin-button--ghost" type="button" data-sidebar-close>Fechar menu</button></div></aside>
+      <div class="admin-overlay" data-admin-overlay></div>
+      <main class="admin-main">
+        <header class="admin-topbar"><button class="admin-button admin-button--ghost" type="button" data-sidebar-open aria-expanded="false">Menu</button><div class="admin-page-title"><h1 data-page-title>Novo produto</h1><div class="admin-breadcrumb" data-page-breadcrumb>Admin / Produtos / Novo</div></div><div class="admin-topbar__tools"><label class="admin-search"><span class="sr-only">Busca global</span><input type="search" placeholder="Buscar no painel" data-global-search /></label><span class="admin-status" data-api-status>API desconectada</span><span class="admin-avatar">AD</span></div></header>
+        <div class="admin-content">
+          <form class="admin-form" data-product-form>
+            <section class="admin-form-section"><h2>Informações básicas</h2><div class="admin-form-grid">
+              <div class="admin-field"><label for="product-name">Nome</label><input id="product-name" required /></div>
+              <div class="admin-field"><label for="product-slug">Slug</label><input id="product-slug" pattern="[a-z0-9-]+" /></div>
+              <div class="admin-field"><label for="product-sku">SKU</label><input id="product-sku" /></div>
+              <div class="admin-field"><label for="product-brand">Marca</label><input id="product-brand" /></div>
+              <div class="admin-field"><label for="product-category">Categoria</label><input id="product-category" /></div>
+              <div class="admin-field"><label for="product-collection">Coleção</label><input id="product-collection" /></div>
+              <div class="admin-field"><label for="product-model">Modelo</label><input id="product-model" /></div>
+              <div class="admin-field"><label for="product-type">Tipo de produto</label><input id="product-type" /></div>
+              <div class="admin-field"><label for="product-audience">Gênero ou público</label><input id="product-audience" /></div>
+              <div class="admin-field"><label for="short-description">Descrição curta</label><textarea id="short-description"></textarea></div>
+              <div class="admin-field"><label for="full-description">Descrição completa</label><textarea id="full-description"></textarea></div>
+            </div></section>
+            <section class="admin-form-section"><h2>Preços</h2><div class="admin-form-grid admin-form-grid--three">
+              <div class="admin-field"><label for="price">Preço</label><input id="price" inputmode="decimal" placeholder="R$ 0,00" /></div><div class="admin-field"><label for="old-price">Preço anterior</label><input id="old-price" inputmode="decimal" /></div><div class="admin-field"><label for="cost">Custo</label><input id="cost" inputmode="decimal" /></div><div class="admin-field"><label for="sale-price">Preço promocional</label><input id="sale-price" inputmode="decimal" /></div><div class="admin-field"><label for="sale-start">Início da promoção</label><input id="sale-start" type="datetime-local" /></div><div class="admin-field"><label for="sale-end">Fim da promoção</label><input id="sale-end" type="datetime-local" /></div>
+            </div></section>
+            <section class="admin-form-section"><h2>Estoque</h2><div class="admin-form-grid admin-form-grid--three">
+              <label class="admin-check"><input type="checkbox" />Controlar estoque</label><div class="admin-field"><label for="stock-qty">Quantidade</label><input id="stock-qty" type="number" min="0" /></div><div class="admin-field"><label for="min-stock">Estoque mínimo</label><input id="min-stock" type="number" min="0" /></div><label class="admin-check"><input type="checkbox" />Permitir venda sem estoque</label><label class="admin-check"><input type="checkbox" />Disponível</label><label class="admin-check"><input type="checkbox" />Pronta entrega</label>
+            </div></section>
+            <section class="admin-form-section"><h2>Variações</h2><p class="admin-help">As linhas abaixo existem apenas nesta sessão do formulário.</p><button class="admin-button" type="button" data-add-variation>Adicionar variação</button><div class="admin-variation-list" data-variation-list></div></section>
+            <section class="admin-form-section"><h2>Imagens</h2><div class="admin-dropzone"><label class="admin-field"><span>Selecionar arquivos para prévia temporária</span><input type="file" accept="image/*" multiple data-image-input /></label><p class="admin-help">Sem upload real. Pré-visualizações usam URL temporária do navegador.</p></div><div class="admin-image-list" data-image-list></div></section>
+            <section class="admin-form-section"><h2>Organização</h2><div class="admin-form-grid admin-form-grid--three"><div class="admin-field"><label for="tags">Tags</label><input id="tags" /></div><label class="admin-check"><input type="checkbox" />Destaque</label><label class="admin-check"><input type="checkbox" />Lançamento</label><label class="admin-check"><input type="checkbox" />Mais vendido</label><label class="admin-check"><input type="checkbox" />Produto relacionado</label><div class="admin-field"><label for="status">Status</label><select id="status"><option>Rascunho</option><option>Publicado</option><option>Arquivado</option></select></div><div class="admin-field"><label for="visibility">Visibilidade</label><select id="visibility"><option>Público</option><option>Oculto</option></select></div></div></section>
+            <section class="admin-form-section"><h2>SEO</h2><div class="admin-form-grid"><div class="admin-field"><label for="seo-title">Título SEO</label><input id="seo-title" /></div><div class="admin-field"><label for="seo-description">Descrição SEO</label><textarea id="seo-description"></textarea></div><div class="admin-field"><label for="canonical">Canonical</label><input id="canonical" /></div><div class="admin-field"><label for="main-alt">Texto alternativo da imagem principal</label><input id="main-alt" /></div></div><div class="admin-seo-preview"><strong data-seo-preview-title>Título SEO</strong><span data-seo-preview-url>https://dripzone.com.br/pages/produto/?id=slug-do-produto</span><p data-seo-preview-description>Descrição SEO aparecerá aqui.</p></div></section>
+            <div class="admin-actions"><button class="admin-button" type="submit">Salvar rascunho</button><button class="admin-button admin-button--primary" type="button" data-publish-product>Publicar</button><button class="admin-button" type="button" data-preview-product>Visualizar</button><a class="admin-button admin-button--ghost" href="/admin/produtos/">Cancelar</a></div>
+          </form>
+        </div>
+      </main>
+    </div>
+    <div class="admin-toast-region" data-toast-region aria-live="polite"></div>
+  </body>
+</html>

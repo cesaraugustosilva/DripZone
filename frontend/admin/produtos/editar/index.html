@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Editar produto | DripZone Admin</title>
+    <link rel="stylesheet" href="/admin/css/admin.css" />
+    <link rel="stylesheet" href="/admin/css/responsive.css" />
+    <link rel="stylesheet" href="/admin/css/theme.css" />
+    <script type="module" src="./js/product-form.js?v=api-base-3000-20260730"></script>
+  </head>
+  <body>
+    <div class="admin-app">
+      <aside class="admin-sidebar" id="admin-sidebar" data-admin-sidebar><div class="admin-brand"><span class="admin-brand__mark">DZ</span><div><strong>DripZone Admin</strong><span>Produto</span></div></div><nav class="admin-nav" data-admin-nav></nav><div class="admin-sidebar__foot"><a class="admin-store-link" href="/pages/home/">Ver loja</a><button class="admin-button admin-button--ghost" type="button" data-backend-action>Sair</button><button class="admin-button admin-button--ghost" type="button" data-sidebar-close>Fechar menu</button></div></aside>
+      <div class="admin-overlay" data-admin-overlay></div>
+      <main class="admin-main">
+        <header class="admin-topbar"><button class="admin-button admin-button--ghost" type="button" data-sidebar-open aria-expanded="false">Menu</button><div class="admin-page-title"><h1 data-page-title>Editar produto</h1><div class="admin-breadcrumb" data-page-breadcrumb>Admin / Produtos / Editar</div></div><div class="admin-topbar__tools"><label class="admin-search"><span class="sr-only">Busca global</span><input type="search" placeholder="Buscar no painel" data-global-search /></label><span class="admin-status" data-api-status>API desconectada</span><span class="admin-avatar">AD</span></div></header>
+        <div class="admin-content">
+          <section class="admin-empty" data-product-not-found hidden><div class="admin-empty__box"><h2>Produto não encontrado.</h2><p>Nenhum produto real foi encontrado para o ID informado.</p><a class="admin-button" href="/admin/produtos/">Voltar para produtos</a></div></section>
+          <form class="admin-form" data-product-form>
+            <section class="admin-form-section"><h2>Informações básicas</h2><div class="admin-form-grid"><div class="admin-field"><label for="product-name">Nome</label><input id="product-name" required /></div><div class="admin-field"><label for="product-slug">Slug</label><input id="product-slug" pattern="[a-z0-9-]+" /></div><div class="admin-field"><label for="product-category">Categoria</label><input id="product-category" /></div><div class="admin-field"><label for="short-description">Descrição curta</label><textarea id="short-description"></textarea></div></div></section>
+            <section class="admin-form-section"><h2>SEO</h2><div class="admin-form-grid"><div class="admin-field"><label for="seo-title">Título SEO</label><input id="seo-title" /></div><div class="admin-field"><label for="seo-description">Descrição SEO</label><textarea id="seo-description"></textarea></div></div><div class="admin-seo-preview"><strong data-seo-preview-title>Título SEO</strong><span data-seo-preview-url>https://dripzone.com.br/pages/produto/?id=slug-do-produto</span><p data-seo-preview-description>Descrição SEO aparecerá aqui.</p></div></section>
+            <section class="admin-form-section"><h2>Variações e imagens</h2><button class="admin-button" type="button" data-add-variation>Adicionar variação</button><div class="admin-variation-list" data-variation-list></div><label class="admin-field"><span>Prévia temporária de imagens</span><input type="file" accept="image/*" multiple data-image-input /></label><div class="admin-image-list" data-image-list></div></section>
+            <div class="admin-actions"><button class="admin-button" type="submit">Salvar rascunho</button><button class="admin-button admin-button--primary" type="button" data-publish-product>Publicar</button><button class="admin-button" type="button" data-preview-product>Visualizar</button><a class="admin-button admin-button--ghost" href="/admin/produtos/">Cancelar</a></div>
+          </form>
+        </div>
+      </main>
+    </div>
+    <div class="admin-toast-region" data-toast-region aria-live="polite"></div>
+  </body>
+</html>

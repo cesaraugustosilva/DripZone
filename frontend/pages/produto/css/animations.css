@@ -1,0 +1,76 @@
+﻿@keyframes floatShape {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(8deg);
+  }
+
+  50% {
+    transform: translate3d(0, 18px, 0) rotate(13deg);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes ripple {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(18);
+  }
+}
+
+@keyframes skeleton {
+  to {
+    background-position: -220% 0;
+  }
+}
+
+@keyframes cartPulse {
+  0%,
+  100% {
+    transform: translateX(0) scale(1);
+  }
+
+  45% {
+    transform: translateX(0) scale(0.985);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(34px);
+  transition:
+    opacity 820ms var(--ease),
+    transform 820ms var(--ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero__shape {
+  animation: floatShape 8.5s var(--ease) infinite;
+}
+
+.ticker__track {
+  animation: marquee 22s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Importacoes | DripZone Admin</title>
+    <link rel="stylesheet" href="/admin/css/admin.css" />
+    <link rel="stylesheet" href="/admin/css/responsive.css" />
+    <link rel="stylesheet" href="/admin/css/theme.css" />
+    <script type="module" src="./js/imports.js?v=api-base-3000-20260730"></script>
+  </head>
+  <body>
+    <div class="admin-app">
+      <aside class="admin-sidebar" id="admin-sidebar" data-admin-sidebar><div class="admin-brand"><span class="admin-brand__mark">DZ</span><div><strong>DripZone Admin</strong><span>Operacoes</span></div></div><nav class="admin-nav" data-admin-nav></nav><div class="admin-sidebar__foot"><a class="admin-store-link" href="/pages/home/">Ver loja</a><button class="admin-button admin-button--ghost" type="button" data-backend-action>Sair</button><button class="admin-button admin-button--ghost" type="button" data-sidebar-close>Fechar menu</button></div></aside>
+      <div class="admin-overlay" data-admin-overlay></div>
+      <main class="admin-main">
+        <header class="admin-topbar"><button class="admin-button admin-button--ghost" type="button" data-sidebar-open aria-controls="admin-sidebar" aria-expanded="false">Menu</button><div class="admin-page-title"><h1 data-page-title>Importacoes</h1><div class="admin-breadcrumb" data-page-breadcrumb>Admin / Importacoes</div></div><div class="admin-topbar__tools"><label class="admin-search"><span class="sr-only">Busca global</span><input type="search" placeholder="Buscar no painel" data-global-search /></label><span class="admin-status" data-api-status>API desconectada</span><span class="admin-avatar">AD</span></div></header>
+        <div class="admin-content">
+          <section class="admin-section admin-import-center" data-import-center>
+            <div class="admin-section__head admin-catalog-header">
+              <div>
+                <p class="admin-eyebrow">Import Center</p>
+                <h2>Importacoes</h2>
+                <p>Crie previews, acompanhe o historico e retome importacoes da DripZone.</p>
+              </div>
+              <div class="admin-actions"><button class="admin-button admin-button--primary" type="button" data-new-import>Nova importacao</button></div>
+            </div>
+
+            <div class="admin-grid admin-grid--four admin-import-summary" data-import-summary>
+              <article class="admin-card admin-metric"><span>Total</span><strong data-summary-total><span class="admin-skeleton admin-kpi-card__skeleton"></span></strong></article>
+              <article class="admin-card admin-metric"><span>Pendentes de revisao</span><strong data-summary-review><span class="admin-skeleton admin-kpi-card__skeleton"></span></strong></article>
+              <article class="admin-card admin-metric"><span>Prontas para continuar</span><strong data-summary-ready><span class="admin-skeleton admin-kpi-card__skeleton"></span></strong></article>
+              <article class="admin-card admin-metric"><span>Falhas recentes</span><strong data-summary-failed><span class="admin-skeleton admin-kpi-card__skeleton"></span></strong></article>
+            </div>
+
+            <div class="admin-panel">
+              <div class="admin-toolbar admin-catalog-toolbar">
+                <label class="admin-field"><span>Status</span><select data-import-status-filter><option value="">Todos</option><option value="draft">Rascunho</option><option value="scanning">Analisando</option><option value="preview_ready">Preview pronto</option><option value="failed">Falha</option><option value="cancelled">Cancelada</option></select></label>
+                <div class="admin-catalog-toolbar__meta"><span class="admin-muted" data-import-results>Carregando historico</span><button class="admin-button admin-button--ghost" type="button" data-refresh-imports>Atualizar</button></div>
+              </div>
+
+              <div class="admin-table-wrap" data-import-history hidden>
+                <table class="admin-table admin-catalog-table">
+                  <thead><tr><th>ID</th><th>Origem</th><th>Marca</th><th>Itens</th><th>Status</th><th>Criacao</th><th>Atualizacao</th><th>Acoes</th></tr></thead>
+                  <tbody data-import-history-body></tbody>
+                </table>
+              </div>
+              <div class="admin-catalog-loading" data-import-history-loading><span class="admin-skeleton"></span><span class="admin-skeleton"></span><span class="admin-skeleton"></span></div>
+              <div class="admin-empty" data-import-history-empty hidden><div class="admin-empty__box"><h2>Nenhuma importacao encontrada.</h2><p>Inicie uma importacao Yupoo para gerar uma pre-visualizacao.</p><button class="admin-button admin-button--primary" type="button" data-new-import>Nova importacao</button></div></div>
+              <div class="admin-empty" data-import-history-error hidden><div class="admin-empty__box"><h2>Nao foi possivel carregar importacoes.</h2><p>Verifique a sessao e tente novamente.</p></div></div>
+              <div class="admin-pagination" data-import-pagination hidden><button class="admin-button admin-button--ghost" type="button" data-import-prev>Anterior</button><span class="admin-muted" data-import-page>Pagina 1</span><button class="admin-button admin-button--ghost" type="button" data-import-next>Proxima</button></div>
+            </div>
+          </section>
+
+          <section class="admin-section admin-import-wizard" data-import-wizard hidden>
+            <div class="admin-section__head admin-catalog-header">
+              <div>
+                <p class="admin-eyebrow">Import Wizard</p>
+                <h2 tabindex="-1" data-wizard-title>Nova importacao</h2>
+                <p data-wizard-description>Informe a origem para gerar uma pre-visualizacao.</p>
+              </div>
+              <div class="admin-actions"><button class="admin-button admin-button--ghost" type="button" data-exit-wizard>Voltar ao Import Center</button></div>
+            </div>
+
+            <nav class="admin-import-stepper" aria-label="Etapas da importacao" data-import-stepper></nav>
+            <div class="admin-alert" data-flow-alert hidden aria-live="polite"></div>
+
+            <div class="admin-panel admin-import-step" data-step-source>
+              <div class="admin-import-source-grid">
+                <article class="admin-card admin-import-source-card is-active"><strong>Yupoo</strong><span class="admin-badge admin-badge--ok">Disponivel</span><p>Use um album ou pasta Yupoo permitido.</p></article>
+                <article class="admin-card admin-import-source-card is-disabled"><strong>Manual</strong><span class="admin-badge admin-badge--warn">Em breve</span><p>Entrada manual ficara para uma sprint futura.</p></article>
+                <article class="admin-card admin-import-source-card is-disabled"><strong>CSV</strong><span class="admin-badge admin-badge--warn">Em breve</span><p>Importacao por arquivo ainda nao esta disponivel.</p></article>
+                <article class="admin-card admin-import-source-card is-disabled"><strong>API</strong><span class="admin-badge admin-badge--warn">Em breve</span><p>Conector externo ainda nao esta disponivel.</p></article>
+              </div>
+
+              <form class="admin-form admin-import-form" data-import-form novalidate>
+                <div class="admin-form-grid">
+                  <label class="admin-field"><span>Marca</span><select required data-import-brand><option value="">Carregando marcas...</option></select></label>
+                  <label class="admin-field"><span>URL do album ou pasta Yupoo</span><input type="url" required data-import-url aria-describedby="import-url-help" /></label>
+                </div>
+                <p class="admin-help" id="import-url-help">Use uma URL HTTP/HTTPS em yupoo.com ou subdominio permitido.</p>
+                <p class="admin-help" data-import-form-error hidden></p>
+                <div class="admin-actions"><button class="admin-button admin-button--primary" type="submit" data-import-submit>Gerar preview</button></div>
+              </form>
+            </div>
+
+            <div class="admin-panel admin-import-step" data-step-analyzing hidden>
+              <div class="admin-import-loading">
+                <span class="admin-skeleton"></span>
+                <h3>Analisando origem</h3>
+                <p>Validando origem, analisando album e preparando preview. O backend retorna somente quando a pre-visualizacao estiver pronta ou falhar.</p>
+              </div>
+            </div>
+
+            <div class="admin-panel admin-import-step" data-step-preview hidden>
+              <div class="admin-section__head"><div><p class="admin-eyebrow">Preview</p><h3 data-preview-title>Importacao criada</h3><p data-preview-description></p></div></div>
+              <div class="admin-grid admin-grid--three" data-preview-metrics></div>
+              <div class="admin-import-detail-list" data-preview-details></div>
+              <div class="admin-actions"><button class="admin-button admin-button--primary" type="button" data-review-next>Continuar para revisao</button><button class="admin-button" type="button" data-exit-wizard>Voltar ao Import Center</button></div>
+            </div>
+
+            <div class="admin-panel admin-import-step" data-step-review hidden>
+              <div class="admin-section__head"><div><p class="admin-eyebrow">Revisao</p><h3>Revisao operacional</h3><p>Revise itens reais, edite campos permitidos, aprove e publique com confirmacao.</p></div><span class="admin-muted" data-review-updated>Atualizando</span></div>
+              <div class="admin-grid admin-grid--four admin-import-quality" data-review-quality></div>
+              <div class="admin-toolbar admin-import-review-toolbar">
+                <label class="admin-field"><span>Filtro</span><select data-review-filter><option value="all">Todos</option><option value="ready">Prontos</option><option value="attention">Atencao</option><option value="invalid">Invalidos</option><option value="approved">Aprovados</option><option value="not_approved">Nao aprovados</option><option value="published">Publicados</option></select></label>
+                <div class="admin-catalog-toolbar__meta"><span class="admin-muted" data-review-filter-note></span><button class="admin-button admin-button--ghost" type="button" data-review-refresh>Atualizar</button></div>
+              </div>
+              <div class="admin-import-bulkbar">
+                <label class="admin-check"><input type="checkbox" data-review-select-page /><span>Selecionar pagina</span></label>
+                <span class="admin-muted" data-review-selection-count>0 selecionados nesta pagina</span>
+                <button class="admin-button admin-button--secondary" type="button" data-review-approve-selected disabled>Aprovar selecionados</button>
+                <button class="admin-button admin-button--primary" type="button" data-review-publish-selected disabled>Publicar selecionados</button>
+              </div>
+              <div class="admin-table-wrap" data-review-table hidden><table class="admin-table admin-catalog-table admin-import-review-table"><thead><tr><th>Selecao</th><th>Imagem</th><th>Item</th><th>Marca</th><th>Categoria</th><th>Preco</th><th>Status</th><th>Avisos</th><th>Confianca</th><th>Acoes</th></tr></thead><tbody data-review-body></tbody></table></div>
+              <div class="admin-catalog-loading" data-review-loading><span class="admin-skeleton"></span><span class="admin-skeleton"></span><span class="admin-skeleton"></span></div>
+              <div class="admin-empty" data-review-empty hidden><div class="admin-empty__box"><h2>Nenhum item encontrado.</h2><p>Esta pagina ou filtro nao retornou itens reais.</p></div></div>
+              <div class="admin-empty" data-review-error hidden><div class="admin-empty__box"><h2>Nao foi possivel carregar itens.</h2><p>Verifique a sessao e tente novamente.</p></div></div>
+              <div class="admin-pagination" data-review-pagination hidden><button class="admin-button admin-button--ghost" type="button" data-review-prev>Anterior</button><span class="admin-muted" data-review-page>Pagina 1</span><button class="admin-button admin-button--ghost" type="button" data-review-next-page>Proxima</button></div>
+              <div class="admin-panel admin-import-publish-result" data-publish-result hidden>
+                <div class="admin-section__head"><div><p class="admin-eyebrow">Resultado</p><h3>Resultado da publicacao</h3></div></div>
+                <div class="admin-import-detail-list">
+                  <div class="admin-import-detail-item"><span>Produtos criados</span><strong data-publish-created>0</strong></div>
+                  <div class="admin-import-detail-item"><span>Ignorados</span><strong data-publish-skipped>0</strong></div>
+                  <div class="admin-import-detail-item"><span>Falhas</span><strong data-publish-failed>0</strong></div>
+                </div>
+                <ul class="admin-resource-list" data-publish-result-list></ul>
+              </div>
+              <div class="admin-actions"><button class="admin-button" type="button" data-exit-wizard>Voltar ao Import Center</button></div>
+            </div>
+
+            <div class="admin-panel admin-import-step" data-step-failed hidden>
+              <div class="admin-empty"><div class="admin-empty__box"><h2>Importacao com falha</h2><p data-failure-message>Nao foi possivel concluir esta pre-visualizacao.</p><button class="admin-button admin-button--primary" type="button" data-start-over>Iniciar outra importacao</button></div></div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <div class="admin-modal" data-import-editor-modal hidden role="dialog" aria-modal="true" aria-labelledby="import-editor-title">
+      <div class="admin-modal__panel admin-import-editor">
+        <div class="admin-modal__head"><div><p class="admin-eyebrow">Editar item</p><h2 id="import-editor-title" data-editor-title>Item</h2></div><button class="admin-button admin-button--ghost" type="button" data-editor-close>Fechar</button></div>
+        <form class="admin-modal__body admin-form" data-editor-form novalidate>
+          <p class="admin-alert admin-alert--danger" data-editor-error hidden></p>
+          <input type="hidden" name="updated_at" />
+          <div class="admin-form-grid">
+            <label class="admin-field"><span>Nome sugerido</span><input name="suggested_name" maxlength="300" autocomplete="off" /></label>
+            <label class="admin-field"><span>Categoria</span><select name="suggested_category_id"></select></label>
+            <label class="admin-field"><span>Modelo</span><input name="suggested_model" maxlength="180" autocomplete="off" /></label>
+            <label class="admin-field"><span>Cor</span><input name="suggested_color" maxlength="120" autocomplete="off" /></label>
+            <label class="admin-field"><span>Status</span><select name="status"><option value="pending">Pendente</option><option value="needs_review">Atencao</option><option value="invalid">Invalido</option><option value="reviewed">Revisado</option></select></label>
+          </div>
+          <section>
+            <div class="admin-section__head"><div><h3>Imagens</h3><p>Downloads e alteracoes usam endpoints reais e exigem acao explicita.</p></div></div>
+            <div class="admin-import-image-grid" data-editor-images></div>
+          </section>
+          <div class="admin-modal__foot admin-actions"><button class="admin-button admin-button--primary" type="submit" data-editor-submit>Salvar item</button><button class="admin-button" type="button" data-editor-close>Cancelar</button></div>
+        </form>
+      </div>
+    </div>
+    <div class="admin-modal" data-publish-modal hidden role="dialog" aria-modal="true" aria-labelledby="publish-title">
+      <div class="admin-modal__panel">
+        <div class="admin-modal__head"><div><p class="admin-eyebrow">Confirmacao</p><h2 id="publish-title">Publicar produtos</h2></div></div>
+        <div class="admin-modal__body">
+          <p>Voce esta prestes a criar produtos em rascunho no catalogo. Esta acao exige confirmacao explicita e nao sera repetida automaticamente.</p>
+          <div class="admin-import-detail-list" data-publish-summary></div>
+        </div>
+        <div class="admin-modal__foot admin-actions"><button class="admin-button" type="button" data-publish-cancel>Cancelar</button><button class="admin-button admin-button--primary" type="button" data-publish-confirm>Publicar produtos</button></div>
+      </div>
+    </div>
+    <div class="admin-toast-region" data-toast-region aria-live="polite"></div>
+  </body>
+</html>

@@ -1,0 +1,226 @@
+﻿{
+  "version": 1,
+  "updatedAt": "2026-07-16T23:27:35.551Z",
+  "brands": [
+    {
+      "id": "adidas",
+      "slug": "adidas",
+      "aliases": [],
+      "active": true,
+      "name": "Adidas"
+    },
+    {
+      "id": "aime-leon-dore",
+      "slug": "aime-leon-dore",
+      "aliases": [
+        "ALD"
+      ],
+      "active": true,
+      "name": "Aimé Leon Dore"
+    },
+    {
+      "id": "amiri",
+      "slug": "amiri",
+      "aliases": [],
+      "active": true,
+      "name": "Amiri"
+    },
+    {
+      "id": "balenciaga",
+      "slug": "balenciaga",
+      "aliases": [],
+      "active": true,
+      "name": "Balenciaga"
+    },
+    {
+      "id": "bape",
+      "slug": "bape",
+      "aliases": [
+        "A Bathing Ape"
+      ],
+      "active": true,
+      "name": "Bape"
+    },
+    {
+      "id": "cactus-jack",
+      "slug": "cactus-jack",
+      "aliases": [
+        "Cactus Jack / Travis Scott"
+      ],
+      "active": true,
+      "name": "Cactus Jack"
+    },
+    {
+      "id": "casablanca",
+      "slug": "casablanca",
+      "aliases": [],
+      "active": true,
+      "name": "Casablanca"
+    },
+    {
+      "id": "chrome-hearts",
+      "slug": "chrome-hearts",
+      "aliases": [],
+      "active": true,
+      "name": "Chrome Hearts"
+    },
+    {
+      "id": "corteiz",
+      "slug": "corteiz",
+      "aliases": [],
+      "active": true,
+      "name": "Corteiz"
+    },
+    {
+      "id": "denim-tears",
+      "slug": "denim-tears",
+      "aliases": [],
+      "active": true,
+      "name": "Denim Tears"
+    },
+    {
+      "id": "fear-of-god-essentials",
+      "slug": "fear-of-god-essentials",
+      "aliases": [
+        "Essentials",
+        "Fear of God",
+        "Essentials / Fear of God"
+      ],
+      "active": true,
+      "name": "Fear of God Essentials"
+    },
+    {
+      "id": "godspeed",
+      "slug": "godspeed",
+      "aliases": [],
+      "active": true,
+      "name": "Godspeed"
+    },
+    {
+      "id": "hellstar",
+      "slug": "hellstar",
+      "aliases": [],
+      "active": true,
+      "name": "Hellstar"
+    },
+    {
+      "id": "jordan",
+      "slug": "jordan",
+      "aliases": [
+        "Air Jordan"
+      ],
+      "active": true,
+      "name": "Jordan"
+    },
+    {
+      "id": "louis-vuitton",
+      "slug": "louis-vuitton",
+      "aliases": [
+        "LV"
+      ],
+      "active": true,
+      "name": "Louis Vuitton"
+    },
+    {
+      "id": "minus-two",
+      "slug": "minus-two",
+      "aliases": [],
+      "active": true,
+      "name": "Minus Two"
+    },
+    {
+      "id": "moncler",
+      "slug": "moncler",
+      "aliases": [],
+      "active": true,
+      "name": "Moncler"
+    },
+    {
+      "id": "nike",
+      "slug": "nike",
+      "aliases": [],
+      "active": true,
+      "name": "Nike"
+    },
+    {
+      "id": "nocta",
+      "slug": "nocta",
+      "aliases": [],
+      "active": true,
+      "name": "Nocta"
+    },
+    {
+      "id": "off-white",
+      "slug": "off-white",
+      "aliases": [],
+      "active": true,
+      "name": "Off-White"
+    },
+    {
+      "id": "palm-angels",
+      "slug": "palm-angels",
+      "aliases": [],
+      "active": true,
+      "name": "Palm Angels"
+    },
+    {
+      "id": "rhude",
+      "slug": "rhude",
+      "aliases": [],
+      "active": true,
+      "name": "Rhude"
+    },
+    {
+      "id": "sp5der",
+      "slug": "sp5der",
+      "aliases": [],
+      "active": true,
+      "name": "SP5DER"
+    },
+    {
+      "id": "stussy",
+      "slug": "stussy",
+      "aliases": [],
+      "active": true,
+      "name": "Stussy"
+    },
+    {
+      "id": "supreme",
+      "slug": "supreme",
+      "aliases": [],
+      "active": true,
+      "name": "Supreme"
+    },
+    {
+      "id": "syna-world",
+      "slug": "syna-world",
+      "aliases": [
+        "Synaworld",
+        "Syna"
+      ],
+      "active": true,
+      "name": "Syna World"
+    },
+    {
+      "id": "trapstar",
+      "slug": "trapstar",
+      "aliases": [],
+      "active": true,
+      "name": "Trapstar"
+    },
+    {
+      "id": "vale-lives-forever",
+      "slug": "vale-lives-forever",
+      "aliases": [],
+      "active": true,
+      "name": "Vale Lives Forever"
+    },
+    {
+      "id": "vlone",
+      "slug": "vlone",
+      "aliases": [],
+      "active": true,
+      "name": "Vlone"
+    }
+  ]
+}

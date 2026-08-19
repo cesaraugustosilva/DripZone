@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Dashboard | DripZone Admin</title>
+    <link rel="stylesheet" href="/admin/css/admin.css" />
+    <link rel="stylesheet" href="/admin/css/responsive.css" />
+    <link rel="stylesheet" href="/admin/css/theme.css" />
+    <script type="module" src="./js/dashboard.js?v=api-base-3000-20260730"></script>
+  </head>
+  <body>
+    <div class="admin-app">
+      <aside class="admin-sidebar" id="admin-sidebar" data-admin-sidebar aria-label="Navegacao administrativa">
+        <div class="admin-brand"><span class="admin-brand__mark">DZ</span><div><strong>DripZone Admin</strong><span>Frontend administrativo</span></div></div>
+        <nav class="admin-nav" data-admin-nav aria-label="Principal"></nav>
+        <div class="admin-sidebar__foot">
+          <a class="admin-store-link" href="/pages/home/">Ver loja</a>
+          <button class="admin-button admin-button--ghost" type="button" data-backend-action>Sair</button>
+          <button class="admin-button admin-button--ghost" type="button" data-sidebar-close>Fechar menu</button>
+        </div>
+      </aside>
+      <div class="admin-overlay" data-admin-overlay></div>
+      <main class="admin-main">
+        <header class="admin-topbar">
+          <button class="admin-button admin-button--ghost" type="button" data-sidebar-open aria-controls="admin-sidebar" aria-expanded="false">Menu</button>
+          <div class="admin-page-title"><h1 data-page-title>Dashboard</h1><div class="admin-breadcrumb" data-page-breadcrumb>Admin / Dashboard</div></div>
+          <div class="admin-topbar__tools">
+            <label class="admin-search"><span class="sr-only">Busca global</span><input type="search" placeholder="Buscar no painel" data-global-search /></label>
+            <span class="admin-status" data-api-status>API desconectada</span>
+            <span class="admin-avatar" aria-label="Administrador">AD</span>
+          </div>
+        </header>
+        <div class="admin-content">
+          <section class="admin-section admin-dashboard-hero">
+            <div>
+              <h2>Dashboard</h2>
+              <p>Resumo geral da operacao da DripZone.</p>
+            </div>
+            <a class="admin-button admin-button--primary" href="/admin/importacoes/">Nova Importacao</a>
+          </section>
+
+          <section class="admin-section" aria-labelledby="dashboard-kpis-title">
+            <div class="admin-section__head">
+              <div>
+                <p class="admin-eyebrow">Operacao</p>
+                <h2 id="dashboard-kpis-title">Indicadores principais</h2>
+              </div>
+            </div>
+            <div class="admin-grid admin-dashboard-kpis" data-dashboard-kpis>
+              <article class="admin-card admin-metric admin-kpi-card">
+                <span class="admin-kpi-card__icon" aria-hidden="true">P</span>
+                <div>
+                  <strong data-kpi-products><span class="admin-skeleton admin-kpi-card__skeleton"></span></strong>
+                  <span>Produtos</span>
+                  <small data-kpi-products-state>Carregando catalogo</small>
+                  <a class="admin-button admin-button--secondary admin-kpi-card__action" href="/admin/produtos/novo/" data-kpi-products-empty hidden>Criar produto</a>
+                </div>
+              </article>
+              <article class="admin-card admin-metric admin-kpi-card">
+                <span class="admin-kpi-card__icon" aria-hidden="true">OK</span>
+                <div>
+                  <strong data-kpi-published><span class="admin-skeleton admin-kpi-card__skeleton"></span></strong>
+                  <span>Publicados</span>
+                  <small data-kpi-published-state>Carregando publicados</small>
+                </div>
+              </article>
+              <article class="admin-card admin-metric admin-kpi-card">
+                <span class="admin-kpi-card__icon" aria-hidden="true">R</span>
+                <div>
+                  <strong data-kpi-drafts><span class="admin-skeleton admin-kpi-card__skeleton"></span></strong>
+                  <span>Rascunhos</span>
+                  <small data-kpi-drafts-state>Carregando rascunhos</small>
+                </div>
+              </article>
+              <article class="admin-card admin-metric admin-kpi-card">
+                <span class="admin-kpi-card__icon" aria-hidden="true">I</span>
+                <div>
+                  <strong data-kpi-imports><span class="admin-skeleton admin-kpi-card__skeleton"></span></strong>
+                  <span>Importacoes pendentes</span>
+                  <small data-kpi-imports-state>Carregando importacoes</small>
+                  <a class="admin-button admin-button--secondary admin-kpi-card__action" href="/admin/importacoes/" data-kpi-imports-empty hidden>Nova importacao</a>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="admin-section admin-grid admin-grid--two admin-dashboard-split">
+            <article class="admin-card">
+              <div class="admin-section__head">
+                <div>
+                  <p class="admin-eyebrow">Linha do tempo</p>
+                  <h2>Atividade recente</h2>
+                </div>
+              </div>
+              <ul class="admin-activity-list" data-activity-list>
+                <li class="admin-activity-list__loading"><span class="admin-skeleton"></span><span class="admin-skeleton"></span></li>
+              </ul>
+              <div class="admin-empty admin-empty--compact" data-activity-empty hidden>
+                <div class="admin-empty__box">
+                  <h2>Nenhuma atividade registrada.</h2>
+                </div>
+              </div>
+            </article>
+
+            <article class="admin-card">
+              <div class="admin-section__head">
+                <div>
+                  <p class="admin-eyebrow">Saude operacional</p>
+                  <h2>Status do sistema</h2>
+                </div>
+              </div>
+              <ul class="admin-status-list" data-system-status>
+                <li><span>API</span><span class="admin-badge admin-badge--warn">Carregando</span></li>
+                <li><span>Banco</span><span class="admin-badge admin-badge--warn">Carregando</span></li>
+                <li><span>Storage</span><span class="admin-badge admin-badge--warn">Carregando</span></li>
+                <li><span>Sessao</span><span class="admin-badge admin-badge--warn">Carregando</span></li>
+              </ul>
+            </article>
+          </section>
+
+          <section class="admin-section" aria-labelledby="dashboard-actions-title">
+            <div class="admin-section__head">
+              <div>
+                <p class="admin-eyebrow">Acesso rapido</p>
+                <h2 id="dashboard-actions-title">Acoes rapidas</h2>
+              </div>
+            </div>
+            <div class="admin-grid admin-dashboard-actions">
+              <a class="admin-card admin-quick-card" href="/admin/produtos/"><span class="admin-kpi-card__icon" aria-hidden="true">P</span><strong>Produtos</strong></a>
+              <a class="admin-card admin-quick-card" href="/admin/marcas/"><span class="admin-kpi-card__icon" aria-hidden="true">M</span><strong>Marcas</strong></a>
+              <a class="admin-card admin-quick-card" href="/admin/categorias/"><span class="admin-kpi-card__icon" aria-hidden="true">C</span><strong>Categorias</strong></a>
+              <a class="admin-card admin-quick-card" href="/admin/colecoes/"><span class="admin-kpi-card__icon" aria-hidden="true">O</span><strong>Colecoes</strong></a>
+              <a class="admin-card admin-quick-card" href="/admin/importacoes/"><span class="admin-kpi-card__icon" aria-hidden="true">I</span><strong>Importacoes</strong></a>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <div class="admin-toast-region" data-toast-region aria-live="polite" aria-label="Notificacoes"></div>
+  </body>
+</html>

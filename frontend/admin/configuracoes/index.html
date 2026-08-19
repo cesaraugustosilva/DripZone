@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Configuracoes | DripZone Admin</title>
+    <link rel="stylesheet" href="/admin/css/admin.css" />
+    <link rel="stylesheet" href="/admin/css/responsive.css" />
+    <link rel="stylesheet" href="/admin/css/theme.css" />
+    <script type="module" src="./js/settings.js?v=api-base-3000-20260730"></script>
+  </head>
+  <body>
+    <div class="admin-app">
+      <aside class="admin-sidebar" id="admin-sidebar" data-admin-sidebar><div class="admin-brand"><span class="admin-brand__mark">DZ</span><div><strong>DripZone Admin</strong><span>Sistema</span></div></div><nav class="admin-nav" data-admin-nav></nav><div class="admin-sidebar__foot"><a class="admin-store-link" href="/pages/home/">Ver loja</a><button class="admin-button admin-button--ghost" type="button" data-backend-action>Sair</button><button class="admin-button admin-button--ghost" type="button" data-sidebar-close>Fechar menu</button></div></aside>
+      <div class="admin-overlay" data-admin-overlay></div>
+      <main class="admin-main">
+        <header class="admin-topbar"><button class="admin-button admin-button--ghost" type="button" data-sidebar-open aria-controls="admin-sidebar" aria-expanded="false">Menu</button><div class="admin-page-title"><h1 data-page-title>Configuracoes</h1><div class="admin-breadcrumb" data-page-breadcrumb>Admin / Configuracoes</div></div><div class="admin-topbar__tools"><label class="admin-search"><span class="sr-only">Busca global</span><input type="search" placeholder="Buscar configuracao" data-global-search /></label><span class="admin-status" data-api-status>API desconectada</span><span class="admin-avatar">AD</span></div></header>
+        <div class="admin-content">
+          <section class="admin-section">
+            <div class="admin-tabs" role="tablist" aria-label="Configuracoes do painel">
+              <button class="admin-tab" type="button" role="tab" aria-controls="panel-general" aria-selected="true">Geral</button>
+              <button class="admin-tab" type="button" role="tab" aria-controls="panel-catalog" aria-selected="false">Catalogo</button>
+              <button class="admin-tab" type="button" role="tab" aria-controls="panel-commerce" aria-selected="false">Comercial</button>
+              <button class="admin-tab" type="button" role="tab" aria-controls="panel-integrations" aria-selected="false">Integracoes</button>
+              <button class="admin-tab" type="button" role="tab" aria-controls="panel-appearance" aria-selected="false">Aparencia</button>
+            </div>
+            <div class="admin-panel">
+              <section class="admin-tab-panel admin-form-section" id="panel-general" role="tabpanel"><h2>Geral</h2><div class="admin-form-grid"><label><span>Nome da loja</span><input type="text" value="DripZone" disabled /></label><label><span>Modo</span><input type="text" value="API local conectada" disabled /></label></div><button class="admin-button admin-button--primary" type="button" data-settings-backend>Salvar geral</button></section>
+              <section class="admin-tab-panel admin-form-section" id="panel-catalog" role="tabpanel" hidden><h2>Catalogo</h2><div class="admin-form-grid"><label><span>Publicacao padrao</span><select disabled><option>Rascunho</option></select></label><label><span>Fonte de produtos</span><input type="text" value="/data/products.json" disabled /></label></div><button class="admin-button admin-button--primary" type="button" data-settings-backend>Salvar catalogo</button></section>
+              <section class="admin-tab-panel admin-form-section" id="panel-commerce" role="tabpanel" hidden><h2>Comercial</h2><div class="admin-form-grid"><label><span>Moeda</span><input type="text" value="BRL" disabled /></label><label><span>Checkout</span><input type="text" value="Nao conectado" disabled /></label></div><button class="admin-button admin-button--primary" type="button" data-settings-backend>Salvar comercial</button></section>
+              <section class="admin-tab-panel admin-form-section" id="panel-integrations" role="tabpanel" hidden><h2>Integracoes</h2><div class="admin-resource-list"><article><strong>Backend local</strong><p class="admin-muted">API local configurada centralmente.</p></article><article><strong>Autenticacao administrativa</strong><p class="admin-muted">Sessao por cookie e CSRF ativos no backend.</p></article></div><button class="admin-button admin-button--primary" type="button" data-settings-backend>Testar integracoes</button></section>
+              <section class="admin-tab-panel admin-form-section" id="panel-appearance" role="tabpanel" hidden><h2>Aparencia</h2><div class="admin-form-grid"><label><span>Tema</span><select name="admin-theme"><option value="dark">Escuro</option><option value="contrast">Alto contraste</option></select></label><label><span>Densidade da tabela</span><select name="table-density"><option value="comfortable">Confortavel</option><option value="compact">Compacta</option></select></label><label><span>Menu lateral</span><select name="sidebar-mode"><option value="expanded">Expandido</option><option value="compact">Compacto</option></select></label></div><button class="admin-button admin-button--primary" type="button" data-save-appearance>Salvar aparencia</button></section>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <div class="admin-toast-region" data-toast-region aria-live="polite"></div>
+  </body>
+</html>

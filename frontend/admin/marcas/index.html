@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Marcas | DripZone Admin</title>
+    <link rel="stylesheet" href="/admin/css/admin.css" />
+    <link rel="stylesheet" href="/admin/css/responsive.css" />
+    <link rel="stylesheet" href="/admin/css/theme.css" />
+    <script type="module" src="/admin/js/catalog-resources.js?v=api-base-3000-20260730"></script>
+  </head>
+  <body data-resource-type="brands">
+    <div class="admin-app">
+      <aside class="admin-sidebar" id="admin-sidebar" data-admin-sidebar><div class="admin-brand"><span class="admin-brand__mark">DZ</span><div><strong>DripZone Admin</strong><span>Catalogo</span></div></div><nav class="admin-nav" data-admin-nav></nav><div class="admin-sidebar__foot"><a class="admin-store-link" href="/pages/home/">Ver loja</a><button class="admin-button admin-button--ghost" type="button" data-backend-action>Sair</button><button class="admin-button admin-button--ghost" type="button" data-sidebar-close>Fechar menu</button></div></aside>
+      <div class="admin-overlay" data-admin-overlay></div>
+      <main class="admin-main">
+        <header class="admin-topbar"><button class="admin-button admin-button--ghost" type="button" data-sidebar-open aria-controls="admin-sidebar" aria-expanded="false">Menu</button><div class="admin-page-title"><h1 data-page-title>Marcas</h1><div class="admin-breadcrumb" data-page-breadcrumb>Admin / Marcas</div></div><div class="admin-topbar__tools"><label class="admin-search"><span class="sr-only">Busca global</span><input type="search" placeholder="Buscar marcas" data-global-search /></label><span class="admin-status" data-api-status>API desconectada</span><span class="admin-avatar">AD</span></div></header>
+        <div class="admin-content">
+          <section class="admin-section admin-catalog-page">
+            <div class="admin-section__head admin-catalog-header"><div><p class="admin-eyebrow">Catalogo</p><h2>Marcas</h2><p>Organize os produtos pelas marcas disponiveis na loja.</p></div><div class="admin-actions"><button class="admin-button admin-button--primary" type="button" data-create-resource>Nova marca</button></div></div>
+            <div class="admin-panel">
+              <div class="admin-toolbar admin-catalog-toolbar">
+                <label class="admin-field"><span>Busca</span><input class="admin-inline-input" type="search" placeholder="Buscar marca ou slug" data-resource-search /></label>
+                <label class="admin-field"><span>Status</span><select data-resource-status><option value="">Todos</option><option value="active">Ativo</option><option value="inactive">Inativo</option></select></label>
+                <div class="admin-catalog-toolbar__meta"><span class="admin-muted" data-resource-results>Carregando marcas</span><button class="admin-button admin-button--ghost" type="button" data-clear-resource-filters>Limpar filtros</button></div>
+              </div>
+              <div class="admin-table-wrap" data-resource-table hidden><table class="admin-table admin-catalog-table"><thead><tr><th>Marca</th><th>Slug</th><th>Status</th><th>Ordem</th><th>Acoes</th></tr></thead><tbody data-resource-tbody></tbody></table></div>
+              <div class="admin-catalog-loading" data-resource-loading><span class="admin-skeleton"></span><span class="admin-skeleton"></span><span class="admin-skeleton"></span></div>
+              <div class="admin-empty" data-resource-empty hidden><div class="admin-empty__box"><h2>Nenhuma marca cadastrada.</h2></div></div>
+              <div class="admin-empty" data-resource-error hidden><div class="admin-empty__box"><h2>Nao foi possivel carregar marcas.</h2><p>Verifique a sessao e tente novamente.</p><button class="admin-button" type="button" data-retry-resources>Recarregar</button></div></div>
+              <div class="admin-pagination" data-resource-pagination hidden><button class="admin-button admin-button--ghost" type="button" data-resource-prev>Anterior</button><span class="admin-muted" data-resource-page>Pagina 1</span><button class="admin-button admin-button--ghost" type="button" data-resource-next>Proxima</button></div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <div class="admin-toast-region" data-toast-region aria-live="polite"></div>
+  </body>
+</html>

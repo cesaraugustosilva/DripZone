@@ -1,0 +1,48 @@
+{
+	admin off
+}
+
+dripzone.com.br {
+	encode zstd gzip
+	request_body {
+		max_size 12MB
+	}
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+		X-Frame-Options "DENY"
+		Cross-Origin-Opener-Policy "same-origin"
+		Cross-Origin-Resource-Policy "same-origin"
+		-Server
+	}
+
+	route {
+		respond /healthz "ok" 200
+
+		header /api/* Cache-Control "no-store"
+		reverse_proxy /api/* backend:3000
+
+		handle_path /uploads/* {
+			root * /srv/uploads
+			header Cache-Control "public, max-age=604800"
+			file_server
+		}
+
+		@products path /data/products.json
+		header @products Cache-Control "no-cache, must-revalidate"
+
+		@assets path /assets/* *.css *.js *.png *.jpg *.jpeg *.webp *.svg *.ico *.xml *.txt *.webmanifest
+		header @assets Cache-Control "public, max-age=86400"
+
+		@html path / *.html /admin* /pages*
+		header @html Cache-Control "no-cache"
+
+		root * /srv/frontend
+		try_files {path} {path}/index.html /index.html
+		file_server
+	}
+}
