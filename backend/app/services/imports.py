@@ -90,6 +90,10 @@ class YupooAlbumProduct:
     image_alts: list[str]
 
 
+YUPOO_PAGINATION_FALLBACK_LIMIT = 500
+YUPOO_IMAGE_ATTR_PRIORITY = ("data-origin-src", "data-original", "data-src", "src")
+
+
 class ImportHTMLParser(HTMLParser):
     def __init__(self, page_url: str):
         super().__init__()
@@ -150,6 +154,7 @@ class YupooHTMLParser(HTMLParser):
         self.album_links: list[YupooAlbumLink] = []
         self.gallery_images: list[dict] = []
         self.pagination_links: list[str] = []
+        self.page_text_parts: list[str] = []
         self._in_title = False
         self._current_album_href: str | None = None
         self._current_album_title: str = ""
@@ -176,10 +181,14 @@ class YupooHTMLParser(HTMLParser):
                 self._current_album_title = data.get("title", "").strip()
                 self._current_album_thumbnail = None
             elif "pagination__number" in classes or "pagination__button" in classes:
-                if is_yupoo_category_url(absolute):
+                if is_yupoo_listing_url(absolute):
                     self.pagination_links.append(normalize_url(absolute))
+        elif tag == "input":
+            if (data.get("name") or "").casefold() in {key.casefold() for key in PAGE_QUERY_KEYS}:
+                for page_url in pagination_urls_from_max_control(self.page_url, data.get("max")):
+                    self.pagination_links.append(page_url)
         elif tag == "img":
-            src = data.get("data-src") or data.get("data-original") or data.get("src")
+            src = best_yupoo_image_source(data)
             if not src:
                 return
             absolute_src = urljoin(self.page_url, src)
@@ -189,6 +198,8 @@ class YupooHTMLParser(HTMLParser):
                 self.gallery_images.append(
                     {
                         "src": prefer_yupoo_image_resolution(absolute_src),
+                        "raw_src": absolute_src,
+                        "source_attr": next((attr for attr in YUPOO_IMAGE_ATTR_PRIORITY if data.get(attr) == src), ""),
                         "alt": data.get("alt", "").strip(),
                         "title": data.get("title", "").strip(),
                         "class": data.get("class", "").strip(),
@@ -218,24 +229,41 @@ class YupooHTMLParser(HTMLParser):
         text = data.strip()
         if text and self._in_title:
             self.title_parts.append(text)
+        if text:
+            self.page_text_parts.append(text)
 
 
 def is_yupoo_category_url(url: str) -> bool:
     return re.search(r"/categories/\d+(?:[/?#]|$)", urlparse(str(url)).path + "?", flags=re.I) is not None
 
 
+def is_yupoo_collection_url(url: str) -> bool:
+    return re.search(r"/collections/\d+(?:[/?#]|$)", urlparse(str(url)).path + "?", flags=re.I) is not None
+
+
 def is_yupoo_album_url(url: str) -> bool:
     return re.search(r"/albums/\d+(?:[/?#]|$)", urlparse(str(url)).path + "?", flags=re.I) is not None
+
+
+def is_yupoo_albums_index_url(url: str) -> bool:
+    path = urlparse(str(url)).path.rstrip("/") or "/"
+    return path in {"/", "/albums"}
+
+
+def is_yupoo_listing_url(url: str) -> bool:
+    return is_yupoo_category_url(url) or is_yupoo_collection_url(url) or is_yupoo_albums_index_url(url)
 
 
 def detect_yupoo_page_type(url: str, html_body: str | None = None) -> str:
     if is_yupoo_category_url(url):
         return "category_page"
+    if is_yupoo_collection_url(url):
+        return "collection_page"
     if is_yupoo_album_url(url):
         return "album_page"
     body = html_body or ""
     if 'class="album__main"' in body or "class='album__main'" in body:
-        return "category_page"
+        return "listing_page"
     if "showalbum.css" in body or "viewer__thumbnail" in body:
         return "album_page"
     return "unsupported_page"
@@ -295,15 +323,39 @@ def prefer_yupoo_image_resolution(url: str) -> str:
     parsed = urlparse(str(url))
     if "photo.yupoo.com" not in (parsed.hostname or ""):
         return url
-    path = re.sub(r"/(?:small|square)\.(jpg|jpeg|png|webp)$", r"/medium.\1", parsed.path, flags=re.I)
+    path = re.sub(r"/(?:small|square|thumb)\.(jpg|jpeg|png|webp)$", r"/medium.\1", parsed.path, flags=re.I)
     return urlunparse(parsed._replace(path=path, fragment=""))
+
+
+def best_yupoo_image_source(attrs: dict[str, str]) -> str:
+    for key in YUPOO_IMAGE_ATTR_PRIORITY:
+        value = attrs.get(key)
+        if value:
+            return value
+    return ""
+
+
+def pagination_urls_from_max_control(page_url: str, raw_max: str | None) -> list[str]:
+    try:
+        page_max = int(str(raw_max or "").strip())
+    except ValueError:
+        return []
+    if page_max <= 1:
+        return []
+    page_max = min(page_max, YUPOO_PAGINATION_FALLBACK_LIMIT)
+    current = page_number_from_url(page_url) or 1
+    return [category_page_url(page_url, page) for page in range(1, page_max + 1) if page != current]
 
 
 def parse_yupoo_page(url: str, html_body: str) -> tuple[str, dict[str, str], list[YupooAlbumLink], list[dict], list[str]]:
     parser = YupooHTMLParser(url)
     parser.feed(html_body)
     title = " ".join(parser.title_parts).strip()
-    return title, parser.meta, parser.album_links, parser.gallery_images, parser.pagination_links
+    meta = dict(parser.meta)
+    page_text = re.sub(r"\s+", " ", " ".join(parser.page_text_parts)).strip()
+    if page_text:
+        meta["page_text"] = page_text[:8000]
+    return title, meta, parser.album_links, parser.gallery_images, parser.pagination_links
 
 
 def discover_yupoo_album_links(root_url: str, page_url: str, html_body: str) -> tuple[list[YupooAlbumLink], list[str], dict]:
@@ -457,6 +509,37 @@ def normalize_url(url: str) -> str:
     return urlunparse(normalized)
 
 
+def normalize_legacy_yupoo_url(url: str) -> str:
+    parsed = urlparse(str(url).strip())
+    host = normalize_hostname(parsed.hostname or "") if parsed.hostname else ""
+    if host not in {"yupoo.com", "www.yupoo.com"}:
+        return url
+    parts = [part for part in parsed.path.split("/") if part]
+    if len(parts) < 2 or parts[0] != "photos":
+        return url
+    catalog = parts[1].casefold()
+    if not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,62}", catalog):
+        raise ApiError(422, "IMPORT_INVALID_LEGACY_YUPOO_URL", "URL antiga do Yupoo possui catalogo invalido.")
+    rest = parts[2:]
+    if not rest:
+        new_path = "/albums"
+    elif rest[0] in {"albums", "categories", "collections"} and (len(rest) == 1 or re.fullmatch(r"\d+", rest[1] or "")):
+        new_path = "/" + "/".join(rest[:2])
+    else:
+        raise ApiError(422, "IMPORT_INVALID_LEGACY_YUPOO_URL", "URL antiga do Yupoo nao e suportada.")
+    return urlunparse(parsed._replace(scheme="https", netloc=f"{catalog}.x.yupoo.com", path=new_path, params="", fragment=""))
+
+
+def canonical_yupoo_source_url(url: str) -> str:
+    normalized = normalize_url(normalize_legacy_yupoo_url(url))
+    parsed = urlparse(normalized)
+    host = parsed.hostname or ""
+    path = parsed.path.rstrip("/") or "/"
+    if host.endswith(".x.yupoo.com") and path == "/":
+        return urlunparse(parsed._replace(path="/albums"))
+    return normalized
+
+
 def new_import_scan_state(root_url: str) -> ImportScanState:
     normalized = normalize_url(root_url)
     return ImportScanState([normalized], set(), {normalized}, set())
@@ -480,6 +563,7 @@ def import_scan_metadata(state: ImportScanState, *, max_pages: int, max_items: i
 
 def validate_source_url(url: str, allowed_hosts: list[str] | None = None) -> str:
     allowed = allowed_hosts or settings.import_allowed_host_list
+    url = normalize_legacy_yupoo_url(url)
     parsed = urlparse(str(url))
     if parsed.scheme not in {"http", "https"} or not parsed.hostname:
         raise ApiError(422, "IMPORT_INVALID_URL", "Informe uma URL HTTP ou HTTPS valida.")
