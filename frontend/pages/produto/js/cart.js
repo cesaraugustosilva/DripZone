@@ -111,12 +111,14 @@ function renderCart() {
   const subtotal = document.querySelector("[data-cart-subtotal]");
   const shipping = document.querySelector("[data-cart-shipping]");
   const total = document.querySelector("[data-cart-total]");
-  const count = document.querySelector("[data-cart-count]");
+  const counts = document.querySelectorAll("[data-cart-count]");
   const checkout = document.querySelector("[data-cart-checkout]");
   const checkoutMessage = document.querySelector("[data-cart-checkout-message]");
   const hasItems = cartState.items.length > 0;
 
-  if (count) count.textContent = String(getCartTotalQuantity());
+  counts.forEach((count) => {
+    count.textContent = String(getCartTotalQuantity());
+  });
   if (subtotal) subtotal.textContent = cartFormatPrice(getCartSubtotal());
   if (shipping) shipping.textContent = cartFormatPrice(getCartShipping());
   if (total) total.textContent = cartFormatPrice(getCartSubtotal() + getCartShipping());

@@ -114,6 +114,9 @@ class ProductPatch(BaseModel):
     sku: str | None = Field(default=None, max_length=80)
     short_description: str | None = Field(default=None, max_length=300)
     description: str | None = Field(default=None, max_length=5000)
+    brand_id: int | None = None
+    category_id: int | None = None
+    sneaker_model_id: int | None = None
     price: Decimal | None = Field(default=None, ge=0)
     stock_quantity: int | None = Field(default=None, ge=0)
     status: ProductStatus | None = None

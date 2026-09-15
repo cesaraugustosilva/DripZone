@@ -38,3 +38,5 @@ backend/.env
 htmlcov/
 .DS_Store
 Thumbs.db
+frontend/_visual-audit/
+logo marcas/

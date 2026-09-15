@@ -10,7 +10,7 @@ const source = fs.readFileSync(path.join(root, "frontend", "admin", "js", "confi
 function loadConfig(hostname, globals = {}) {
   const transformed = source.replace(/export const /g, "const ").concat("\nwindow.__config = { API_BASE_URL, ADMIN_CONFIG, IS_DEVELOPMENT };\n");
   const window = {
-    location: { hostname, port: globals.port || "" },
+    location: { hostname, port: globals.port || "", protocol: globals.protocol || "http:" },
     navigator: {},
     console: { log() {} },
     ...globals
@@ -26,6 +26,11 @@ test("admin defaults to Docker/Caddy API during local development", () => {
 
 test("admin uses same-origin API when opened through local Docker proxy", () => {
   assert.equal(loadConfig("127.0.0.1", { port: "8080" }).API_BASE_URL, "/api");
+});
+
+test("admin points static local development at the backend API", () => {
+  assert.equal(loadConfig("localhost", { port: "5500" }).API_BASE_URL, "http://localhost:8000/api");
+  assert.equal(loadConfig("127.0.0.1", { port: "5500" }).API_BASE_URL, "http://127.0.0.1:8000/api");
 });
 
 test("admin defaults to same-origin API behind production proxy", () => {

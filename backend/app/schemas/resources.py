@@ -58,6 +58,8 @@ class SneakerCreate(BaseModel):
 class SneakerRead(SneakerCreate, ORMModel):
     id: int
     slug: str
+    brand_slug: str | None = None
+    brand_name: str | None = None
     created_at: datetime
     updated_at: datetime
 

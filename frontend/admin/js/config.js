@@ -1,12 +1,25 @@
+const LOCAL_HOSTNAMES = ["localhost", "127.0.0.1", ""];
+const STATIC_DEV_PORT = "5500";
+const LOCAL_BACKEND_PORT = "8000";
+
+function isLocalHost() {
+  return LOCAL_HOSTNAMES.includes(window.location.hostname);
+}
+
+function resolveLocalBackendOrigin() {
+  const hostname = window.location.hostname === "127.0.0.1" ? "127.0.0.1" : "localhost";
+  return `${window.location.protocol}//${hostname}:${LOCAL_BACKEND_PORT}`;
+}
+
 function resolveDefaultApiBaseUrl() {
-  if (!["localhost", "127.0.0.1", ""].includes(window.location.hostname)) {
-    return "/api";
+  if (isLocalHost() && window.location.port === STATIC_DEV_PORT) {
+    return `${resolveLocalBackendOrigin()}/api`;
   }
   return "/api";
 }
 
 export const API_BASE_URL = window.DRIPZONE_API_BASE_URL ?? window.API_BASE_URL ?? resolveDefaultApiBaseUrl();
-export const IS_DEVELOPMENT = ["localhost", "127.0.0.1", ""].includes(window.location.hostname);
+export const IS_DEVELOPMENT = isLocalHost();
 
 export const ADMIN_CONFIG = {
   mode: "api",

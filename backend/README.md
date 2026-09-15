@@ -16,7 +16,7 @@ cd backend
 py -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
-pip install -r requirements.txt
+pip install -r requirements.txt -c constraints.txt
 copy .env.example .env
 python -m alembic upgrade head
 python scripts/create_admin.py

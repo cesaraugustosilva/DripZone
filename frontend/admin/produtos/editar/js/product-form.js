@@ -1,15 +1,19 @@
-import { getProductById, createProduct, updateProduct, publishProduct, uploadProductImage, ApiError } from "./api.js?v=api-base-3000-20260730";
+import { getProductById, createProduct, updateProduct, publishProduct, uploadProductImage, getBrands, getCategories, getSneakers, ApiError } from "./api.js?v=api-base-3000-20260730";
 import { initAdminPage, setText } from "/admin/js/admin.js?v=api-base-3000-20260730";
 import { notify, openModal } from "/admin/js/notifications.js?v=api-base-3000-20260730";
 
 const isEditPage = window.location.pathname.includes("/editar/");
 const pageTitle = isEditPage ? "Editar produto" : "Novo produto";
 let loadedProduct = null;
+let brands = [];
+let categories = [];
+let sneakerModels = [];
 
 await initAdminPage({ title: pageTitle, breadcrumb: `Admin / Produtos / ${pageTitle}` });
 initProductForm();
 
 async function initProductForm() {
+  await loadProductReferenceData();
   bindFormTools();
   bindPreview();
 
@@ -36,10 +40,83 @@ function bindFormTools() {
   document.querySelector("[data-product-form]")?.addEventListener("submit", handleSubmit);
   document.querySelector("[data-publish-product]")?.addEventListener("click", handleSubmit);
   document.querySelector("[data-preview-product]")?.addEventListener("click", showTemporaryPreview);
+  document.getElementById("product-brand")?.addEventListener("change", () => updateSneakerModelField());
+  document.getElementById("product-category")?.addEventListener("change", () => updateSneakerModelField());
+  document.getElementById("product-type")?.addEventListener("input", () => updateSneakerModelField());
   document.addEventListener("click", (event) => {
     if (!(event.target instanceof Element)) return;
     if (event.target.matches("[data-remove-row]")) event.target.closest("[data-dynamic-row]")?.remove();
   });
+}
+
+async function loadProductReferenceData() {
+  const [brandsResult, categoriesResult, sneakersResult] = await Promise.allSettled([
+    getBrands(),
+    getCategories(),
+    getSneakers()
+  ]);
+  brands = brandsResult.status === "fulfilled" ? brandsResult.value || [] : [];
+  categories = categoriesResult.status === "fulfilled" ? categoriesResult.value || [] : [];
+  sneakerModels = sneakersResult.status === "fulfilled" ? sneakersResult.value || [] : [];
+  fillResourceSelect("product-brand", brands, "Sem marca");
+  fillResourceSelect("product-category", categories, "Sem categoria");
+  updateSneakerModelField();
+}
+
+function fillResourceSelect(id, items, emptyLabel) {
+  const select = document.getElementById(id);
+  if (!select) return;
+  const options = [new Option(emptyLabel, "")];
+  items.forEach((item) => {
+    const option = new Option(item.name || item.slug || item.id, String(item.id));
+    option.dataset.slug = item.slug || "";
+    select.append(option);
+    options.push(option);
+  });
+  select.replaceChildren(...options);
+}
+
+function selectedResource(id, items) {
+  const value = document.getElementById(id)?.value || "";
+  return items.find((item) => String(item.id) === value) || null;
+}
+
+function selectedId(id) {
+  const value = document.getElementById(id)?.value || "";
+  return value ? Number(value) : null;
+}
+
+function normalizeText(value) {
+  return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+function isSneakerProduct() {
+  const category = selectedResource("product-category", categories);
+  const categoryText = normalizeText([category?.slug, category?.name].filter(Boolean).join(" "));
+  const productTypeText = normalizeText(document.getElementById("product-type")?.value || "");
+  return /\b(sneaker|sneakers|tenis|calcado|calcados)\b/.test(`${categoryText} ${productTypeText}`);
+}
+
+function updateSneakerModelField() {
+  const wrapper = document.querySelector("[data-sneaker-model-field]");
+  const select = document.getElementById("product-model");
+  if (!wrapper || !select) return;
+
+  const enabled = isSneakerProduct();
+  const brandId = selectedId("product-brand");
+  const currentValue = select.value;
+  const models = sneakerModels.filter((model) => model.is_active !== false && (!brandId || !model.brand_id || model.brand_id === brandId));
+  const options = [new Option("Sem modelo", "")];
+  models.forEach((model) => {
+    const option = new Option(model.name || model.slug || model.id, String(model.id));
+    option.dataset.brandId = model.brand_id ? String(model.brand_id) : "";
+    option.dataset.slug = model.slug || "";
+    options.push(option);
+  });
+  select.replaceChildren(...options);
+  select.value = models.some((model) => String(model.id) === currentValue) ? currentValue : "";
+  select.disabled = !enabled;
+  wrapper.hidden = !enabled;
 }
 
 function addVariationRow() {
@@ -176,6 +253,9 @@ function collectPayload() {
     sku: document.getElementById("product-sku")?.value || null,
     short_description: document.getElementById("short-description")?.value || null,
     description: document.getElementById("full-description")?.value || null,
+    brand_id: selectedId("product-brand"),
+    category_id: selectedId("product-category"),
+    sneaker_model_id: !document.getElementById("product-model")?.disabled ? selectedId("product-model") : null,
     product_type: document.getElementById("product-type")?.value || null,
     audience: document.getElementById("product-audience")?.value || null,
     price: moneyValue("price"),
@@ -221,6 +301,10 @@ function fillProduct(product) {
     "product-name": product.name,
     "product-slug": product.slug,
     "product-sku": product.sku,
+    "product-brand": product.brand_id,
+    "product-category": product.category_id,
+    "product-model": product.sneaker_model_id,
+    "product-type": product.product_type,
     "short-description": product.short_description,
     "full-description": product.description,
     "price": product.price,
@@ -232,5 +316,8 @@ function fillProduct(product) {
     const field = document.getElementById(id);
     if (field) field.value = value || "";
   });
+  updateSneakerModelField();
+  const modelField = document.getElementById("product-model");
+  if (modelField && product.sneaker_model_id) modelField.value = String(product.sneaker_model_id);
   updateSeoPreview();
 }

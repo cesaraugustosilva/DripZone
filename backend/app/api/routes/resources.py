@@ -1,5 +1,5 @@
 ﻿from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 
 from app.database import get_db
 from app.dependencies import current_user, require_csrf
@@ -12,7 +12,7 @@ from app.utils.slug import unique_slug
 brands_router = APIRouter(dependencies=[Depends(current_user)])
 categories_router = APIRouter(dependencies=[Depends(current_user)])
 collections_router = APIRouter(dependencies=[Depends(current_user)])
-sneakers_router = APIRouter(dependencies=[Depends(current_user)])
+sneakers_router = APIRouter()
 accessories_router = APIRouter(dependencies=[Depends(current_user)])
 
 
@@ -43,6 +43,11 @@ def delete_resource(db: Session, model, item_id: int, usage_model=None, usage_fi
     if usage_model and usage_field and db.query(usage_model).filter(getattr(usage_model, usage_field) == item_id).first():
         raise ApiError(409, "RESOURCE_IN_USE", "Registro em uso por produtos.")
     db.delete(item)
+
+
+def validate_sneaker_brand(db: Session, payload: SneakerCreate) -> None:
+    if payload.brand_id and not db.get(Brand, payload.brand_id):
+        raise ApiError(422, "BRAND_NOT_FOUND", "Marca informada não existe.")
 
 
 @brands_router.get("", response_model=list[BrandRead])
@@ -165,10 +170,10 @@ def remove_product_from_collection(item_id: int, product_id: int, db: Session = 
 
 @sneakers_router.get("", response_model=list[SneakerRead])
 def list_sneakers(db: Session = Depends(get_db)):
-    return db.query(SneakerModel).order_by(SneakerModel.position.asc(), SneakerModel.name.asc()).all()
+    return db.query(SneakerModel).options(selectinload(SneakerModel.brand)).order_by(SneakerModel.position.asc(), SneakerModel.name.asc()).all()
 
 
-@sneakers_router.get("/{item_id}", response_model=SneakerRead)
+@sneakers_router.get("/{item_id}", response_model=SneakerRead, dependencies=[Depends(current_user)])
 def get_sneaker(item_id: int, db: Session = Depends(get_db)):
     item = db.get(SneakerModel, item_id)
     if not item:
@@ -176,17 +181,19 @@ def get_sneaker(item_id: int, db: Session = Depends(get_db)):
     return item
 
 
-@sneakers_router.post("", response_model=SneakerRead, status_code=201, dependencies=[Depends(require_csrf)])
+@sneakers_router.post("", response_model=SneakerRead, status_code=201, dependencies=[Depends(current_user), Depends(require_csrf)])
 def post_sneaker(payload: SneakerCreate, db: Session = Depends(get_db)):
+    validate_sneaker_brand(db, payload)
     return create_resource(db, SneakerModel, payload)
 
 
-@sneakers_router.put("/{item_id}", response_model=SneakerRead, dependencies=[Depends(require_csrf)])
+@sneakers_router.put("/{item_id}", response_model=SneakerRead, dependencies=[Depends(current_user), Depends(require_csrf)])
 def put_sneaker(item_id: int, payload: SneakerCreate, db: Session = Depends(get_db)):
+    validate_sneaker_brand(db, payload)
     return update_resource(db, SneakerModel, item_id, payload)
 
 
-@sneakers_router.delete("/{item_id}", status_code=204, dependencies=[Depends(require_csrf)])
+@sneakers_router.delete("/{item_id}", status_code=204, dependencies=[Depends(current_user), Depends(require_csrf)])
 def del_sneaker(item_id: int, db: Session = Depends(get_db)):
     delete_resource(db, SneakerModel, item_id, Product, "sneaker_model_id")
 

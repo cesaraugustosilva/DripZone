@@ -1,5 +1,8 @@
 ﻿const DRIPZONE_SITE_URL = "https://dripzone.com.br";
 
+const DRIPZONE_STATIC_DEV_PORT = "5500";
+const DRIPZONE_LOCAL_BACKEND_PORT = "8000";
+
 function dzFormatPrice(price) {
   return Number(price || 0).toLocaleString("pt-BR", {
     style: "currency",
@@ -36,6 +39,11 @@ function dzAssetPath(path) {
   if (/^(https?:|data:|blob:)/.test(value)) return value;
 
   const cleanPath = value.replace(/^(\.\.\/)+/, "").replace(/^\.\//, "").replace(/^\/+/, "");
+  if (cleanPath.startsWith("uploads/")) {
+    const backendOrigin = dzBackendOrigin();
+    if (backendOrigin) return `${backendOrigin}/${cleanPath}`;
+  }
+
   return `${dzRootPrefix()}${cleanPath}`;
 }
 
@@ -45,6 +53,17 @@ function dzRoute(path = "") {
 
 function dzIsDevelopmentHost() {
   return ["127.0.0.1", "localhost", "::1"].includes(window.location.hostname);
+}
+
+function dzIsStaticLocalDevelopment() {
+  return dzIsDevelopmentHost() && window.location.port === DRIPZONE_STATIC_DEV_PORT;
+}
+
+function dzBackendOrigin() {
+  if (!dzIsStaticLocalDevelopment()) return "";
+
+  const hostname = window.location.hostname === "127.0.0.1" ? "127.0.0.1" : "localhost";
+  return `${window.location.protocol}//${hostname}:${DRIPZONE_LOCAL_BACKEND_PORT}`;
 }
 
 function initImageFallbacks() {
@@ -77,9 +96,73 @@ function initGlobalErrorHandling() {
   });
 }
 
+function initHeaderSearch() {
+  if (!document.querySelector) return;
+
+  const searchForm = document.querySelector("[data-header-search-form]");
+  const searchInput = document.querySelector("[data-header-search-input]");
+  const searchClose = document.querySelector("[data-header-search-close]");
+  const getSearchTriggers = () => document.querySelectorAll("[data-header-search-trigger]");
+  let activeSearchTrigger = null;
+  if (!searchForm || !searchInput) return;
+
+  const setSearchExpanded = (expanded) => {
+    getSearchTriggers().forEach((trigger) => trigger.setAttribute("aria-expanded", String(expanded)));
+  };
+
+  const openHeaderSearch = (trigger) => {
+    activeSearchTrigger = trigger || activeSearchTrigger;
+    searchForm.hidden = false;
+    searchForm.classList.add("is-open");
+    setSearchExpanded(true);
+    searchInput.focus({ preventScroll: true });
+  };
+
+  const closeHeaderSearch = () => {
+    searchForm.classList.remove("is-open");
+    setSearchExpanded(false);
+    activeSearchTrigger?.focus({ preventScroll: true });
+  };
+
+  document.addEventListener("click", (event) => {
+    const trigger = event.target.closest?.("[data-header-search-trigger]");
+    if (!trigger) return;
+
+    if (searchForm.classList.contains("is-open")) {
+      closeHeaderSearch();
+      return;
+    }
+
+    openHeaderSearch(trigger);
+  });
+
+  searchClose?.addEventListener("click", closeHeaderSearch);
+
+  searchForm.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeHeaderSearch();
+    }
+  });
+
+  searchForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const term = searchInput.value.trim();
+    if (!term) {
+      searchInput.focus();
+      return;
+    }
+
+    const params = new URLSearchParams();
+    params.set("q", term);
+    window.location.href = `${dzRoute("pages/catalogo/")}?${params.toString()}`;
+  });
+}
+
 window.DripZoneUtils = {
   absoluteUrl: dzAbsoluteUrl,
   assetPath: dzAssetPath,
+  backendOrigin: dzBackendOrigin,
   formatPrice: dzFormatPrice,
   publicUrl: dzPublicUrl,
   rootPrefix: dzRootPrefix,
@@ -89,3 +172,4 @@ window.DripZoneUtils = {
 
 initImageFallbacks();
 initGlobalErrorHandling();
+initHeaderSearch();

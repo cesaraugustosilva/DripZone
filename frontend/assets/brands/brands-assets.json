@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "updatedAt": "2026-09-03T00:00:00.000Z",
+  "assets": [
+    { "brand": "Adidas", "slug": "adidas", "file": "adidas.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": true, "cleanup_applied": true },
+    { "brand": "Aimé Leon Dore", "slug": "aime-leon-dore", "file": "aime-leon-dore.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Amiri", "slug": "amiri", "file": "amiri.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": true, "cleanup_applied": true },
+    { "brand": "Balenciaga", "slug": "balenciaga", "file": "balenciaga.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": true, "cleanup_applied": true },
+    { "brand": "Bape", "slug": "bape", "file": "bape.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Cactus Jack", "slug": "cactus-jack", "file": "cactus-jack.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Casablanca", "slug": "casablanca", "file": "casablanca.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Chrome Hearts", "slug": "chrome-hearts", "file": "chrome-hearts.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Corteiz", "slug": "corteiz", "file": "corteiz.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Denim Tears", "slug": "denim-tears", "file": "denim-tears.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Fear of God Essentials", "slug": "fear-of-god-essentials", "file": "fear-of-god-essentials.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Jordan", "slug": "jordan", "file": "jordan.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Louis Vuitton", "slug": "louis-vuitton", "file": "louis-vuitton.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Moncler", "slug": "moncler", "file": "moncler.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Nike", "slug": "nike", "file": "nike.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Nocta", "slug": "nocta", "file": "nocta.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Off-White", "slug": "off-white", "file": "off-white.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Palm Angels", "slug": "palm-angels", "file": "palm-angels.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Ralph Lauren", "slug": "ralph-lauren", "file": "ralph-lauren.png", "format": "png", "source_type": "user_upload", "review_status": "REVIEW_REQUIRED", "needs_cleanup": false, "cleanup_applied": false, "note": "Sem entrada correspondente em frontend/data/brands.json; exibida sem link." },
+    { "brand": "Rhude", "slug": "rhude", "file": "rhude.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "SP5DER", "slug": "sp5der", "file": "sp5der.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Stussy", "slug": "stussy", "file": "stussy.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Supreme", "slug": "supreme", "file": "supreme.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false },
+    { "brand": "Trapstar", "slug": "trapstar", "file": "trapstar.png", "format": "png", "source_type": "user_upload", "review_status": "OK", "needs_cleanup": false, "cleanup_applied": false }
+  ]
+}

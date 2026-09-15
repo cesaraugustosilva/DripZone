@@ -11,6 +11,7 @@ from app.schemas.auth import CsrfRead, LoginRequest, SessionRead
 from app.schemas.user import UserRead
 from app.security import DUMMY_PASSWORD_HASH, create_session_payload, get_csrf, normalize_email, sign_session, verify_password
 from app.services.activities import record_activity
+from app.utils.client_ip import get_client_ip
 
 router = APIRouter()
 attempts: dict[str, list[float]] = {}
@@ -20,7 +21,7 @@ LOGIN_RATE_LIMIT_MAX_KEYS = 1000
 
 
 def client_ip(request: Request) -> str:
-    return request.client.host if request.client else "local"
+    return get_client_ip(request)
 
 
 def prune_attempts(now: float):
@@ -96,7 +97,7 @@ def logout(request: Request, response: Response, user: AdminUser = Depends(curre
         secure=request.app.state.settings.cookie_secure,
         samesite=request.app.state.settings.cookie_samesite,
     )
-    record_activity(db, user_id=user.id, action="logout", summary="Logout administrativo.", ip_address=request.client.host if request.client else None)
+    record_activity(db, user_id=user.id, action="logout", summary="Logout administrativo.", ip_address=client_ip(request))
     return {"message": "Sessão encerrada."}
 
 

@@ -22,10 +22,10 @@
               <div class="admin-field"><label for="product-name">Nome</label><input id="product-name" required /></div>
               <div class="admin-field"><label for="product-slug">Slug</label><input id="product-slug" pattern="[a-z0-9-]+" /></div>
               <div class="admin-field"><label for="product-sku">SKU</label><input id="product-sku" /></div>
-              <div class="admin-field"><label for="product-brand">Marca</label><input id="product-brand" /></div>
-              <div class="admin-field"><label for="product-category">Categoria</label><input id="product-category" /></div>
+              <div class="admin-field"><label for="product-brand">Marca</label><select id="product-brand" data-product-brand-select><option value="">Sem marca</option></select></div>
+              <div class="admin-field"><label for="product-category">Categoria</label><select id="product-category" data-product-category-select><option value="">Sem categoria</option></select></div>
               <div class="admin-field"><label for="product-collection">Coleção</label><input id="product-collection" /></div>
-              <div class="admin-field"><label for="product-model">Modelo</label><input id="product-model" /></div>
+              <div class="admin-field" data-sneaker-model-field hidden><label for="product-model">Modelo</label><select id="product-model" data-sneaker-model-select disabled><option value="">Sem modelo</option></select></div>
               <div class="admin-field"><label for="product-type">Tipo de produto</label><input id="product-type" /></div>
               <div class="admin-field"><label for="product-audience">Gênero ou público</label><input id="product-audience" /></div>
               <div class="admin-field"><label for="short-description">Descrição curta</label><textarea id="short-description"></textarea></div>

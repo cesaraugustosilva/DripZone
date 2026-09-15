@@ -56,10 +56,6 @@
   transform: translateY(0);
 }
 
-.hero__shape {
-  animation: floatShape 8.5s var(--ease) infinite;
-}
-
 .ticker__track {
   animation: marquee 22s linear infinite;
 }
@@ -72,5 +68,13 @@
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .featured-brands__track {
+    animation: none !important;
+  }
+
+  .hero-carousel__track {
+    transition: none !important;
   }
 }

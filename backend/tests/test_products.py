@@ -83,6 +83,61 @@ def test_variants_and_export(authed):
     assert export_empty.json()["products"] == []
 
 
+def test_sneaker_model_association_validation_and_public_export(authed, tmp_path):
+    client, headers = authed
+    nike = client.post("/api/brands", json={"name": "Nike", "slug": "nike"}, headers=headers).json()
+    adidas = client.post("/api/brands", json={"name": "Adidas", "slug": "adidas"}, headers=headers).json()
+    category = client.post("/api/categories", json={"name": "Sneakers", "slug": "sneakers"}, headers=headers).json()
+    air_force = client.post("/api/sneakers", json={"name": "Air Force 1", "slug": "air-force-1", "brand_id": nike["id"]}, headers=headers).json()
+    dunk = client.post("/api/sneakers", json={"name": "Dunk", "slug": "dunk", "brand_id": nike["id"]}, headers=headers).json()
+    samba = client.post("/api/sneakers", json={"name": "Samba", "slug": "samba", "brand_id": adidas["id"]}, headers=headers).json()
+
+    mismatch = client.post(
+        "/api/products",
+        json={"name": "Nike Samba Errado", "slug": "nike-samba-errado", "price": "100.00", "brand_id": nike["id"], "category_id": category["id"], "sneaker_model_id": samba["id"]},
+        headers=headers,
+    )
+    assert mismatch.status_code == 422
+    assert mismatch.json()["error"]["code"] == "SNEAKER_MODEL_BRAND_MISMATCH"
+
+    apparel = client.post(
+        "/api/products",
+        json={"name": "Nike Hoodie Sem Modelo", "slug": "nike-hoodie-sem-modelo", "price": "90.00", "brand_id": nike["id"], "category_id": category["id"], "sneaker_model_id": None},
+        headers=headers,
+    )
+    assert apparel.status_code == 201
+    assert apparel.json()["sneaker_model_id"] is None
+
+    product = client.post(
+        "/api/products",
+        json={"name": "Nike Air Force 1 Branco", "slug": "nike-air-force-1-branco", "price": "350.00", "brand_id": nike["id"], "category_id": category["id"], "sneaker_model_id": air_force["id"], "status": "draft"},
+        headers=headers,
+    )
+    assert product.status_code == 201
+    assert product.json()["sneaker_model_id"] == air_force["id"]
+    image = client.post(f"/api/products/{product.json()['id']}/images", files={"file": ("main.jpg", image_bytes("JPEG"), "image/jpeg")}, headers=headers)
+    assert image.status_code == 201
+
+    published = client.post(f"/api/products/{product.json()['id']}/publish", headers=headers)
+    assert published.status_code == 200
+    exported = client.post("/api/products/export", headers=headers).json()["products"]
+    exported_sneaker = next(item for item in exported if item["slug"] == "nike-air-force-1-branco")
+    assert exported_sneaker["model"] == "Air Force 1"
+    assert exported_sneaker["modelId"] == "air-force-1"
+
+    updated = client.put(
+        f"/api/products/{product.json()['id']}",
+        json={"name": "Nike Dunk Branco", "slug": "nike-dunk-branco", "price": "350.00", "brand_id": nike["id"], "category_id": category["id"], "sneaker_model_id": dunk["id"], "status": "published", "visibility": "public"},
+        headers=headers,
+    )
+    assert updated.status_code == 200
+    exported = client.post("/api/products/export", headers=headers).json()["products"]
+    assert not any(item.get("modelId") == "air-force-1" for item in exported)
+    updated_sneaker = next(item for item in exported if item["slug"] == "nike-dunk-branco")
+    assert updated_sneaker["model"] == "Dunk"
+    assert updated_sneaker["modelId"] == "dunk"
+
+
 def test_public_product_serializer_contract_for_complete_product():
     created_at = datetime(2026, 1, 2, 3, 4, 5, tzinfo=timezone.utc)
     product = Product(public_id="public-1", name="Adidas Jacket", slug="adidas-jacket", price=Decimal("199.90"), description="Produto completo.", created_at=created_at)
@@ -121,6 +176,7 @@ def test_public_product_serializer_contract_for_complete_product():
     assert data["categoryId"] == "jaquetas"
     assert data["brand"] == "Adidas"
     assert data["brandId"] == "adidas"
+    assert data["model"] == "Campus 00"
     assert data["modelId"] == "campus-00"
     assert data["collectionId"] == "drop-principal"
     assert data["collectionIds"] == ["drop-principal", "inverno"]
@@ -150,6 +206,7 @@ def test_public_product_serializer_handles_missing_public_values():
     assert data["categoryId"] == ""
     assert data["brand"] == ""
     assert data["brandId"] == ""
+    assert data["model"] == ""
     assert data["modelId"] == ""
     assert data["collectionId"] == ""
     assert data["collectionIds"] == []

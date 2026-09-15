@@ -14,6 +14,7 @@ const categoryNameToId = {
   Todos: "",
   Camisetas: "camisetas",
   "Calças": "calcas",
+  Roupas: "roupas",
   Moletons: "moletons",
   Shorts: "shorts",
   "Acessórios": "acessorios"
@@ -21,6 +22,9 @@ const categoryNameToId = {
 const categoryIdToName = Object.fromEntries(
   Object.entries(categoryNameToId).map(([name, id]) => [id, name])
 );
+const categoryGroups = {
+  roupas: new Set(["camisetas", "calcas", "moletons", "jaquetas", "shorts", "conjuntos"])
+};
 
 const formatPrice = window.DripZoneUtils?.formatPrice || ((price) =>
   Number(price || 0).toLocaleString("pt-BR", {
@@ -44,7 +48,11 @@ function getFilteredProducts() {
 
   return (window.DripZoneProducts || [])
     .filter((product) => !state.brandId || product.brandId === state.brandId)
-    .filter((product) => !state.categoryId || product.categoryId === state.categoryId)
+    .filter((product) => {
+      if (!state.categoryId) return true;
+      const categoryGroup = categoryGroups[state.categoryId];
+      return categoryGroup ? categoryGroup.has(product.categoryId) : product.categoryId === state.categoryId;
+    })
     .filter((product) => !state.modelId || product.modelId === state.modelId)
     .filter((product) => !state.collectionId || productCollectionIds(product).includes(state.collectionId))
     .filter((product) => !isPurchasable(product) || product.price <= state.maxPrice)

@@ -1,10 +1,13 @@
-from functools import lru_cache
+from functools import cached_property, lru_cache
+import ipaddress
 from pathlib import Path
 
 from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 DEVELOPMENT_CORS_ORIGINS = (
+    "http://127.0.0.1:5500",
+    "http://localhost:5500",
     "http://127.0.0.1:4173",
     "http://localhost:4173",
     "http://127.0.0.1:4199",
@@ -24,7 +27,8 @@ class Settings(BaseSettings):
     session_cookie_name: str = "dripzone_admin_session"
     session_max_age: int = 28800
     session_cookie_samesite: str = "lax"
-    cors_origins: str = "http://127.0.0.1:4173,http://localhost:4173,http://127.0.0.1:4199,http://localhost:4199"
+    cors_origins: str = "http://127.0.0.1:5500,http://localhost:5500,http://127.0.0.1:4173,http://localhost:4173,http://127.0.0.1:4199,http://localhost:4199"
+    trusted_proxies: str = ""
     upload_directory: str = "storage/uploads"
     public_products_path: str = ""
     log_level: str = "INFO"
@@ -76,6 +80,15 @@ class Settings(BaseSettings):
             raise ValueError("Configuracao de producao invalida: " + " ".join(errors))
         return self
 
+    @model_validator(mode="after")
+    def validate_trusted_proxies(self):
+        for value in self.trusted_proxy_list:
+            try:
+                ipaddress.ip_network(value, strict=False)
+            except ValueError as exc:
+                raise ValueError(f"TRUSTED_PROXIES contem IP/CIDR invalido: {value}") from exc
+        return self
+
     @property
     def cors_origin_list(self) -> list[str]:
         origins: list[str] = []
@@ -86,6 +99,14 @@ class Settings(BaseSettings):
             if cleaned and cleaned != "*" and cleaned not in origins:
                 origins.append(cleaned)
         return origins
+
+    @property
+    def trusted_proxy_list(self) -> list[str]:
+        return [proxy.strip() for proxy in self.trusted_proxies.split(",") if proxy.strip()]
+
+    @cached_property
+    def trusted_proxy_networks(self) -> tuple[ipaddress.IPv4Network | ipaddress.IPv6Network, ...]:
+        return tuple(ipaddress.ip_network(proxy, strict=False) for proxy in self.trusted_proxy_list)
 
     @property
     def allowed_image_type_list(self) -> list[str]:

@@ -1,5 +1,8 @@
 ﻿const DRIPZONE_SITE_URL = "https://dripzone.com.br";
 
+const DRIPZONE_STATIC_DEV_PORT = "5500";
+const DRIPZONE_LOCAL_BACKEND_PORT = "8000";
+
 function dzFormatPrice(price) {
   return Number(price || 0).toLocaleString("pt-BR", {
     style: "currency",
@@ -36,6 +39,11 @@ function dzAssetPath(path) {
   if (/^(https?:|data:|blob:)/.test(value)) return value;
 
   const cleanPath = value.replace(/^(\.\.\/)+/, "").replace(/^\.\//, "").replace(/^\/+/, "");
+  if (cleanPath.startsWith("uploads/")) {
+    const backendOrigin = dzBackendOrigin();
+    if (backendOrigin) return `${backendOrigin}/${cleanPath}`;
+  }
+
   return `${dzRootPrefix()}${cleanPath}`;
 }
 
@@ -45,6 +53,17 @@ function dzRoute(path = "") {
 
 function dzIsDevelopmentHost() {
   return ["127.0.0.1", "localhost", "::1"].includes(window.location.hostname);
+}
+
+function dzIsStaticLocalDevelopment() {
+  return dzIsDevelopmentHost() && window.location.port === DRIPZONE_STATIC_DEV_PORT;
+}
+
+function dzBackendOrigin() {
+  if (!dzIsStaticLocalDevelopment()) return "";
+
+  const hostname = window.location.hostname === "127.0.0.1" ? "127.0.0.1" : "localhost";
+  return `${window.location.protocol}//${hostname}:${DRIPZONE_LOCAL_BACKEND_PORT}`;
 }
 
 function initImageFallbacks() {
@@ -80,6 +99,7 @@ function initGlobalErrorHandling() {
 window.DripZoneUtils = {
   absoluteUrl: dzAbsoluteUrl,
   assetPath: dzAssetPath,
+  backendOrigin: dzBackendOrigin,
   formatPrice: dzFormatPrice,
   publicUrl: dzPublicUrl,
   rootPrefix: dzRootPrefix,

@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "updatedAt": "2026-09-03T00:00:00.000Z",
+  "catalogParam": "marca",
+  "brands": [
+    { "name": "Adidas", "slug": "adidas", "logo": "assets/brands/adidas.png", "featured": true, "enabled": true },
+    { "name": "Aimé Leon Dore", "slug": "aime-leon-dore", "logo": "assets/brands/aime-leon-dore.png", "featured": true, "enabled": true },
+    { "name": "Amiri", "slug": "amiri", "logo": "assets/brands/amiri.png", "featured": true, "enabled": true },
+    { "name": "Balenciaga", "slug": "balenciaga", "logo": "assets/brands/balenciaga.png", "featured": true, "enabled": true },
+    { "name": "Bape", "slug": "bape", "logo": "assets/brands/bape.png", "featured": true, "enabled": true },
+    { "name": "Cactus Jack", "slug": "cactus-jack", "logo": "assets/brands/cactus-jack.png", "featured": true, "enabled": true },
+    { "name": "Casablanca", "slug": "casablanca", "logo": "assets/brands/casablanca.png", "featured": true, "enabled": true },
+    { "name": "Chrome Hearts", "slug": "chrome-hearts", "logo": "assets/brands/chrome-hearts.png", "featured": true, "enabled": true },
+    { "name": "Corteiz", "slug": "corteiz", "logo": "assets/brands/corteiz.png", "featured": true, "enabled": true },
+    { "name": "Denim Tears", "slug": "denim-tears", "logo": "assets/brands/denim-tears.png", "featured": true, "enabled": true },
+    { "name": "Fear of God Essentials", "slug": "fear-of-god-essentials", "logo": "assets/brands/fear-of-god-essentials.png", "featured": true, "enabled": true },
+    { "name": "Jordan", "slug": "jordan", "logo": "assets/brands/jordan.png", "featured": true, "enabled": true },
+    { "name": "Louis Vuitton", "slug": "louis-vuitton", "logo": "assets/brands/louis-vuitton.png", "featured": true, "enabled": true },
+    { "name": "Moncler", "slug": "moncler", "logo": "assets/brands/moncler.png", "featured": true, "enabled": true },
+    { "name": "Nike", "slug": "nike", "logo": "assets/brands/nike.png", "featured": true, "enabled": true },
+    { "name": "Nocta", "slug": "nocta", "logo": "assets/brands/nocta.png", "featured": true, "enabled": true },
+    { "name": "Off-White", "slug": "off-white", "logo": "assets/brands/off-white.png", "featured": true, "enabled": true },
+    { "name": "Palm Angels", "slug": "palm-angels", "logo": "assets/brands/palm-angels.png", "featured": true, "enabled": true },
+    { "name": "Ralph Lauren", "slug": "ralph-lauren", "logo": "assets/brands/ralph-lauren.png", "featured": true, "enabled": false, "review": "REVIEW_REQUIRED: sem marca correspondente em frontend/data/brands.json" },
+    { "name": "Rhude", "slug": "rhude", "logo": "assets/brands/rhude.png", "featured": true, "enabled": true },
+    { "name": "SP5DER", "slug": "sp5der", "logo": "assets/brands/sp5der.png", "featured": true, "enabled": true },
+    { "name": "Stussy", "slug": "stussy", "logo": "assets/brands/stussy.png", "featured": true, "enabled": true },
+    { "name": "Supreme", "slug": "supreme", "logo": "assets/brands/supreme.png", "featured": true, "enabled": true },
+    { "name": "Trapstar", "slug": "trapstar", "logo": "assets/brands/trapstar.png", "featured": true, "enabled": true }
+  ]
+}

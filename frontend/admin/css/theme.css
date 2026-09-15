@@ -1,4 +1,5 @@
 :root {
+  --font-family-base: "Roboto", Arial, sans-serif;
   --color-bg: #050505;
   --color-bg-secondary: #090a0c;
   --color-surface: #111418;
@@ -44,7 +45,7 @@ body {
   background:
     linear-gradient(180deg, #050505 0%, #090a0c 46%, #0d1014 100%);
   color: var(--color-text);
-  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  font-family: var(--font-family-base);
   letter-spacing: 0;
 }
 

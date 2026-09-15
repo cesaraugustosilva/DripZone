@@ -14,6 +14,7 @@ from app.schemas.product import ProductCreate, ProductPatch, ProductRead, Produc
 from app.services.activities import record_activity
 from app.services import products as service
 from app.services.upload_storage import remove_upload_storage_file
+from app.utils.client_ip import get_client_ip
 
 router = APIRouter(dependencies=[Depends(current_user)])
 logger = logging.getLogger(__name__)
@@ -108,7 +109,7 @@ def get_publication_readiness(product_id: int, db: Session = Depends(get_db)):
 @router.post("", response_model=ProductRead, status_code=201, dependencies=[Depends(require_csrf)])
 def create_product(payload: ProductCreate, request: Request, db: Session = Depends(get_db), user: AdminUser = Depends(current_user)):
     product = service.create_product(db, payload, user.id)
-    record_activity(db, user_id=user.id, action="create", entity_type="product", entity_id=product.id, summary=f"Produto criado: {product.name}", ip_address=request.client.host if request.client else None)
+    record_activity(db, user_id=user.id, action="create", entity_type="product", entity_id=product.id, summary=f"Produto criado: {product.name}", ip_address=get_client_ip(request))
     if service.is_public_product(product):
         commit_with_public_catalog(db, operation="create_product", product_id=product.id)
     return product
@@ -118,7 +119,7 @@ def create_product(payload: ProductCreate, request: Request, db: Session = Depen
 def update_product(product_id: int, payload: ProductUpdate, request: Request, db: Session = Depends(get_db), user: AdminUser = Depends(current_user)):
     was_public = service.is_public_product(service.get_product(db, product_id))
     product = service.update_product(db, product_id, payload, user.id)
-    record_activity(db, user_id=user.id, action="update", entity_type="product", entity_id=product.id, summary=f"Produto editado: {product.name}", ip_address=request.client.host if request.client else None)
+    record_activity(db, user_id=user.id, action="update", entity_type="product", entity_id=product.id, summary=f"Produto editado: {product.name}", ip_address=get_client_ip(request))
     if public_catalog_was_affected(was_public, product):
         commit_with_public_catalog(db, operation="update_product", product_id=product.id)
     return product

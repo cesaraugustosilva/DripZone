@@ -34,6 +34,7 @@
         <div class="nav__item" data-menu-item>
           <button class="nav__trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="menu-roupas" data-menu-trigger>Roupas</button>
           <div class="dropdown-menu " id="menu-roupas" role="menu" data-dropdown-menu>
+            <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?categoria=roupas">Ver tudo em Roupas</a>
             <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?categoria=camisetas">Camisetas</a>
             <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?categoria=moletons">Moletons / Jaquetas</a>
             <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?categoria=shorts">Shorts</a>
@@ -44,93 +45,18 @@
         <div class="nav__item" data-menu-item>
           <button class="nav__trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="menu-sneakers" data-menu-trigger>Sneakers</button>
           <div class="dropdown-menu dropdown-menu--vertical dropdown-menu--tall" id="menu-sneakers" role="menu" data-dropdown-menu>
-            <div class="dropdown-menu__item" data-submenu-item>
-              <button class="dropdown-menu__link dropdown-menu__link--button" type="button" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="menu-sneakers-nike" data-submenu-trigger>
-                <span>Nike</span>
-                <span class="dropdown-menu__arrow" aria-hidden="true">></span>
-              </button>
-              <div class="dropdown-submenu dropdown-submenu--inline" id="menu-sneakers-nike" role="menu" data-submenu hidden>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=nike">Ver todos Nike</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=air-force">Air Force</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=air-max-tn-plus">Air Max TN Plus</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=nike-mind">Nike Mind</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=air-max-95">Air Max 95</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=air-max-dn">Air Max DN</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=dunk">Dunk</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=nike-shox">Nike Shox</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=uptempo">Uptempo</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=vomero-5">Vomero 5</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=vomero-premium">Vomero Premium</a>
-              </div>
-            </div>
-            <div class="dropdown-menu__item" data-submenu-item>
-              <button class="dropdown-menu__link dropdown-menu__link--button" type="button" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="menu-sneakers-jordan" data-submenu-trigger>
-                <span>Jordan</span>
-                <span class="dropdown-menu__arrow" aria-hidden="true">></span>
-              </button>
-              <div class="dropdown-submenu dropdown-submenu--inline" id="menu-sneakers-jordan" role="menu" data-submenu hidden>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=jordan">Ver todos Jordan</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=jordan-1-low">Jordan 1 Low</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=jordan-1-high">Jordan 1 High</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=jordan-3">Jordan 3</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=jordan-4">Jordan 4</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=jordan-6">Jordan 6</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=jordan-11">Jordan 11</a>
-              </div>
-            </div>
-            <div class="dropdown-menu__item" data-submenu-item>
-              <button class="dropdown-menu__link dropdown-menu__link--button" type="button" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="menu-sneakers-adidas" data-submenu-trigger>
-                <span>Adidas</span>
-                <span class="dropdown-menu__arrow" aria-hidden="true">></span>
-              </button>
-              <div class="dropdown-submenu dropdown-submenu--inline" id="menu-sneakers-adidas" role="menu" data-submenu hidden>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=adidas">Ver todos Adidas</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=adizero">Adizero</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=bad-bunny">Bad Bunny</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=campus-00">Campus 00</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=foam-runner">Foam Runner</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=yeezy-350-v2">Yeezy 350 V2</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=yeezy-380">Yeezy 380</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=yeezy-500">Yeezy 500</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=yeezy-700">Yeezy 700</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=yeezy-slide">Yeezy Slide</a>
-              </div>
-            </div>
+            <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=nike">Nike</a>
+            <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=jordan">Jordan</a>
+            <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=adidas">Adidas</a>
             <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=amiri">Amiri</a>
             <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=balenciaga">Balenciaga</a>
             <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=louis-vuitton">Louis Vuitton</a>
             <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=off-white">Off-White</a>
-            <div class="dropdown-menu__item" data-submenu-item>
-              <button class="dropdown-menu__link dropdown-menu__link--button" type="button" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="menu-sneakers-new-balance" data-submenu-trigger>
-                <span>New Balance</span>
-                <span class="dropdown-menu__arrow" aria-hidden="true">></span>
-              </button>
-              <div class="dropdown-submenu dropdown-submenu--inline" id="menu-sneakers-new-balance" role="menu" data-submenu hidden>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=new-balance">Ver todos New Balance</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=new-balance-9060">New Balance 9060</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=new-balance-530">New Balance 530</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=new-balance-550">New Balance 550</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=new-balance-1000">New Balance 1000</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=new-balance-1906a">New Balance 1906A</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=new-balance-740">New Balance 740</a>
-              </div>
-            </div>
+            <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=new-balance">New Balance</a>
             <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=bape">Bape</a>
             <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=maison-mihara-yasuhiro">Maison Mihara</a>
             <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=dior">Dior</a>
-            <div class="dropdown-menu__item" data-submenu-item>
-              <button class="dropdown-menu__link dropdown-menu__link--button" type="button" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="menu-sneakers-golden-goose" data-submenu-trigger>
-                <span>Golden Goose</span>
-                <span class="dropdown-menu__arrow" aria-hidden="true">></span>
-              </button>
-              <div class="dropdown-submenu dropdown-submenu--inline" id="menu-sneakers-golden-goose" role="menu" data-submenu hidden>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=golden-goose">Ver todos Golden Goose</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=golden-goose-super-star">Super-Star</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=golden-goose-ball-star">Ball Star</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=golden-goose-stardan">Stardan</a>
-              <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=golden-goose-purestar">Purestar</a>
-              </div>
-            </div>
+            <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=golden-goose">Golden Goose</a>
             <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?modelo=lanvin-curb">Lanvin Curb</a>
             <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=gucci">Gucci</a>
             <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?marca=alexander-mcqueen">Alexander McQueen</a>
@@ -140,6 +66,7 @@
         <div class="nav__item" data-menu-item>
           <button class="nav__trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="menu-acessorios" data-menu-trigger>Acessórios</button>
           <div class="dropdown-menu dropdown-menu--vertical" id="menu-acessorios" role="menu" data-dropdown-menu>
+            <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?categoria=acessorios">Ver tudo em Acessórios</a>
             <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?categoria=aneis">Anéis</a>
             <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?categoria=bags-mochilas">Bags/Mochilas</a>
             <a class="dropdown-menu__link" role="menuitem" href="../catalogo/?categoria=bones">Bonés</a>
@@ -195,6 +122,7 @@
         <div class="mobile-menu__group">
           <button type="button" data-mobile-accordion aria-expanded="false" aria-controls="mobile-panel-roupas">Roupas</button>
           <div class="mobile-menu__panel" id="mobile-panel-roupas">
+            <a href="../catalogo/?categoria=roupas">Ver tudo em Roupas</a>
             <a href="../catalogo/?categoria=camisetas">Camisetas</a>
             <a href="../catalogo/?categoria=moletons">Moletons / Jaquetas</a>
             <a href="../catalogo/?categoria=shorts">Shorts</a>
@@ -205,78 +133,18 @@
         <div class="mobile-menu__group">
           <button type="button" data-mobile-accordion aria-expanded="false" aria-controls="mobile-panel-sneakers">Sneakers</button>
           <div class="mobile-menu__panel" id="mobile-panel-sneakers">
-            <div class="mobile-menu__nested" data-submenu-item>
-              <button type="button" data-submenu-trigger aria-expanded="false" aria-controls="mobile-sneakers-nike">Nike</button>
-              <div class="mobile-menu__nested-list" id="mobile-sneakers-nike" data-submenu hidden>
-              <a href="../catalogo/?marca=nike">Ver todos Nike</a>
-              <a href="../catalogo/?modelo=air-force">Air Force</a>
-              <a href="../catalogo/?modelo=air-max-tn-plus">Air Max TN Plus</a>
-              <a href="../catalogo/?modelo=nike-mind">Nike Mind</a>
-              <a href="../catalogo/?modelo=air-max-95">Air Max 95</a>
-              <a href="../catalogo/?modelo=air-max-dn">Air Max DN</a>
-              <a href="../catalogo/?modelo=dunk">Dunk</a>
-              <a href="../catalogo/?modelo=nike-shox">Nike Shox</a>
-              <a href="../catalogo/?modelo=uptempo">Uptempo</a>
-              <a href="../catalogo/?modelo=vomero-5">Vomero 5</a>
-              <a href="../catalogo/?modelo=vomero-premium">Vomero Premium</a>
-              </div>
-            </div>
-            <div class="mobile-menu__nested" data-submenu-item>
-              <button type="button" data-submenu-trigger aria-expanded="false" aria-controls="mobile-sneakers-jordan">Jordan</button>
-              <div class="mobile-menu__nested-list" id="mobile-sneakers-jordan" data-submenu hidden>
-              <a href="../catalogo/?marca=jordan">Ver todos Jordan</a>
-              <a href="../catalogo/?modelo=jordan-1-low">Jordan 1 Low</a>
-              <a href="../catalogo/?modelo=jordan-1-high">Jordan 1 High</a>
-              <a href="../catalogo/?modelo=jordan-3">Jordan 3</a>
-              <a href="../catalogo/?modelo=jordan-4">Jordan 4</a>
-              <a href="../catalogo/?modelo=jordan-6">Jordan 6</a>
-              <a href="../catalogo/?modelo=jordan-11">Jordan 11</a>
-              </div>
-            </div>
-            <div class="mobile-menu__nested" data-submenu-item>
-              <button type="button" data-submenu-trigger aria-expanded="false" aria-controls="mobile-sneakers-adidas">Adidas</button>
-              <div class="mobile-menu__nested-list" id="mobile-sneakers-adidas" data-submenu hidden>
-              <a href="../catalogo/?marca=adidas">Ver todos Adidas</a>
-              <a href="../catalogo/?modelo=adizero">Adizero</a>
-              <a href="../catalogo/?modelo=bad-bunny">Bad Bunny</a>
-              <a href="../catalogo/?modelo=campus-00">Campus 00</a>
-              <a href="../catalogo/?modelo=foam-runner">Foam Runner</a>
-              <a href="../catalogo/?modelo=yeezy-350-v2">Yeezy 350 V2</a>
-              <a href="../catalogo/?modelo=yeezy-380">Yeezy 380</a>
-              <a href="../catalogo/?modelo=yeezy-500">Yeezy 500</a>
-              <a href="../catalogo/?modelo=yeezy-700">Yeezy 700</a>
-              <a href="../catalogo/?modelo=yeezy-slide">Yeezy Slide</a>
-              </div>
-            </div>
+            <a href="../catalogo/?marca=nike">Nike</a>
+            <a href="../catalogo/?marca=jordan">Jordan</a>
+            <a href="../catalogo/?marca=adidas">Adidas</a>
             <a href="../catalogo/?marca=amiri">Amiri</a>
             <a href="../catalogo/?marca=balenciaga">Balenciaga</a>
             <a href="../catalogo/?marca=louis-vuitton">Louis Vuitton</a>
             <a href="../catalogo/?marca=off-white">Off-White</a>
-            <div class="mobile-menu__nested" data-submenu-item>
-              <button type="button" data-submenu-trigger aria-expanded="false" aria-controls="mobile-sneakers-new-balance">New Balance</button>
-              <div class="mobile-menu__nested-list" id="mobile-sneakers-new-balance" data-submenu hidden>
-              <a href="../catalogo/?marca=new-balance">Ver todos New Balance</a>
-              <a href="../catalogo/?modelo=new-balance-9060">New Balance 9060</a>
-              <a href="../catalogo/?modelo=new-balance-530">New Balance 530</a>
-              <a href="../catalogo/?modelo=new-balance-550">New Balance 550</a>
-              <a href="../catalogo/?modelo=new-balance-1000">New Balance 1000</a>
-              <a href="../catalogo/?modelo=new-balance-1906a">New Balance 1906A</a>
-              <a href="../catalogo/?modelo=new-balance-740">New Balance 740</a>
-              </div>
-            </div>
+            <a href="../catalogo/?marca=new-balance">New Balance</a>
             <a href="../catalogo/?marca=bape">Bape</a>
             <a href="../catalogo/?marca=maison-mihara-yasuhiro">Maison Mihara</a>
             <a href="../catalogo/?marca=dior">Dior</a>
-            <div class="mobile-menu__nested" data-submenu-item>
-              <button type="button" data-submenu-trigger aria-expanded="false" aria-controls="mobile-sneakers-golden-goose">Golden Goose</button>
-              <div class="mobile-menu__nested-list" id="mobile-sneakers-golden-goose" data-submenu hidden>
-              <a href="../catalogo/?marca=golden-goose">Ver todos Golden Goose</a>
-              <a href="../catalogo/?modelo=golden-goose-super-star">Super-Star</a>
-              <a href="../catalogo/?modelo=golden-goose-ball-star">Ball Star</a>
-              <a href="../catalogo/?modelo=golden-goose-stardan">Stardan</a>
-              <a href="../catalogo/?modelo=golden-goose-purestar">Purestar</a>
-              </div>
-            </div>
+            <a href="../catalogo/?marca=golden-goose">Golden Goose</a>
             <a href="../catalogo/?modelo=lanvin-curb">Lanvin Curb</a>
             <a href="../catalogo/?marca=gucci">Gucci</a>
             <a href="../catalogo/?marca=alexander-mcqueen">Alexander McQueen</a>
@@ -286,6 +154,7 @@
         <div class="mobile-menu__group">
           <button type="button" data-mobile-accordion aria-expanded="false" aria-controls="mobile-panel-acessorios">Acessórios</button>
           <div class="mobile-menu__panel" id="mobile-panel-acessorios">
+            <a href="../catalogo/?categoria=acessorios">Ver tudo em Acessórios</a>
             <a href="../catalogo/?categoria=aneis">Anéis</a>
             <a href="../catalogo/?categoria=bags-mochilas">Bags/Mochilas</a>
             <a href="../catalogo/?categoria=bones">Bonés</a>

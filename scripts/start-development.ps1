@@ -15,7 +15,7 @@ if ($Mode -eq "docker") {
     Write-Host "API Admin em 4173: /api via proxy para http://127.0.0.1:8080/api"
     Write-Host "Uploads: /uploads via Docker/Caddy em 8080"
     Write-Host "Backend host em 3000 nao sera iniciado neste modo."
-    Start-Process powershell.exe -ArgumentList "-NoExit", "-ExecutionPolicy", "Bypass", "-File", "`"$FrontendScript`"", "-Port", "$FrontendPort"
+    Start-Process powershell.exe -ArgumentList "-NoExit", "-ExecutionPolicy", "Bypass", "-File", "`"$FrontendScript`"", "-Port", "$FrontendPort", "-ApiProxyTarget", "http://127.0.0.1:8080"
     return
 }
 
@@ -25,4 +25,4 @@ Write-Host "Backend:  http://127.0.0.1:$BackendPort/"
 Write-Host "Use -Mode docker para operar contra API/uploads canonicos em 8080."
 
 Start-Process powershell.exe -ArgumentList "-NoExit", "-ExecutionPolicy", "Bypass", "-File", "`"$BackendScript`"", "-Port", "$BackendPort"
-Start-Process powershell.exe -ArgumentList "-NoExit", "-ExecutionPolicy", "Bypass", "-File", "`"$FrontendScript`"", "-Port", "$FrontendPort"
+Start-Process powershell.exe -ArgumentList "-NoExit", "-ExecutionPolicy", "Bypass", "-File", "`"$FrontendScript`"", "-Port", "$FrontendPort", "-ApiProxyTarget", "http://127.0.0.1:$BackendPort"

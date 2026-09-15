@@ -103,6 +103,14 @@ class SneakerModel(TimestampMixin, Base):
     position: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     brand: Mapped[Brand | None] = relationship(back_populates="sneaker_models")
 
+    @property
+    def brand_slug(self) -> str | None:
+        return self.brand.slug if self.brand else None
+
+    @property
+    def brand_name(self) -> str | None:
+        return self.brand.name if self.brand else None
+
 
 class AccessoryType(TimestampMixin, Base):
     __tablename__ = "accessory_types"

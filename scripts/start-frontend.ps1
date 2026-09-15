@@ -1,5 +1,6 @@
 param(
-    [int]$Port = 4173
+    [int]$Port = 4173,
+    [string]$ApiProxyTarget = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -11,14 +12,16 @@ if (-not (Get-Command node -ErrorAction SilentlyContinue)) {
 }
 
 Write-Host "DripZone frontend: http://127.0.0.1:$Port/"
-Write-Host "Admin API canonica: /api via proxy local para http://127.0.0.1:8080/api (Docker/Caddy)"
+if (-not $ApiProxyTarget) {
+    $ApiProxyTarget = "http://127.0.0.1:8080"
+}
+
+Write-Host "Admin API canonica: /api via proxy local para $ApiProxyTarget/api"
 Write-Host "Uploads: Docker/Caddy em 8080 primeiro; fallback host somente se configurado/necessario."
 Push-Location $FrontendRoot
 try {
     $env:PORT = "$Port"
-    if (-not $env:API_PROXY_TARGET) {
-        $env:API_PROXY_TARGET = "http://127.0.0.1:8080"
-    }
+    $env:API_PROXY_TARGET = $ApiProxyTarget
     if (-not $env:UPLOADS_PROXY_TARGETS) {
         $env:UPLOADS_PROXY_TARGETS = "http://127.0.0.1:8080,http://127.0.0.1:3000"
     }

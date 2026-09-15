@@ -11,7 +11,7 @@ from sqlalchemy import Select, func, or_, select
 from sqlalchemy.orm import Session, selectinload
 
 from app.exceptions import ApiError
-from app.models import Brand, Category, Collection, ImportItem, Product, ProductVariant, utc_now
+from app.models import Brand, Category, Collection, ImportItem, Product, ProductVariant, SneakerModel, utc_now
 from app.schemas.product import ProductCreate, ProductPatch, ProductUpdate
 from app.utils.pagination import pagination_meta
 from app.utils.slug import unique_slug
@@ -257,11 +257,25 @@ def list_products(db: Session, params: dict) -> dict:
     return {"items": items, "pagination": pagination_meta(page, page_size, total)}
 
 
-def validate_refs(db: Session, data) -> None:
-    if data.brand_id and not db.get(Brand, data.brand_id):
+def validate_refs(db: Session, data, product: Product | None = None) -> None:
+    fields_set = getattr(data, "model_fields_set", set())
+    brand_id = getattr(data, "brand_id", None)
+    category_id = getattr(data, "category_id", None)
+    sneaker_model_id = getattr(data, "sneaker_model_id", None)
+    if "sneaker_model_id" not in fields_set and sneaker_model_id is None and brand_id is not None and product is not None:
+        sneaker_model_id = product.sneaker_model_id
+
+    if brand_id and not db.get(Brand, brand_id):
         raise ApiError(422, "BRAND_NOT_FOUND", "Marca informada não existe.")
-    if data.category_id and not db.get(Category, data.category_id):
+    if category_id and not db.get(Category, category_id):
         raise ApiError(422, "CATEGORY_NOT_FOUND", "Categoria informada não existe.")
+    if sneaker_model_id:
+        sneaker_model = db.get(SneakerModel, sneaker_model_id)
+        if not sneaker_model:
+            raise ApiError(422, "SNEAKER_MODEL_NOT_FOUND", "Modelo de sneaker informado não existe.")
+        effective_brand_id = brand_id if brand_id is not None else getattr(product, "brand_id", None)
+        if sneaker_model.brand_id and effective_brand_id and sneaker_model.brand_id != effective_brand_id:
+            raise ApiError(422, "SNEAKER_MODEL_BRAND_MISMATCH", "Modelo de sneaker não pertence à marca informada.")
     for collection_id in getattr(data, "collection_ids", []) or []:
         if not db.get(Collection, collection_id):
             raise ApiError(422, "COLLECTION_NOT_FOUND", "Coleção informada não existe.")
@@ -282,7 +296,7 @@ def ensure_unique(db: Session, *, slug: str, sku: str | None, current_id: int | 
 
 
 def apply_product_data(db: Session, product: Product, data) -> Product:
-    validate_refs(db, data)
+    validate_refs(db, data, product)
     payload = data.model_dump(exclude={"variants", "collection_ids"}, exclude_unset=False)
     slug = payload.get("slug") or unique_slug(db, Product, payload["name"], getattr(product, "id", None))
     ensure_unique(db, slug=slug, sku=payload.get("sku"), current_id=getattr(product, "id", None))
@@ -320,6 +334,7 @@ def update_product(db: Session, product_id: int, data: ProductUpdate, user_id: i
 
 def patch_product(db: Session, product_id: int, data: ProductPatch, user_id: int | None) -> Product:
     product = get_product(db, product_id)
+    validate_refs(db, data, product)
     payload = data.model_dump(exclude_unset=True)
     if "slug" in payload or "sku" in payload:
         ensure_unique(db, slug=payload.get("slug", product.slug), sku=payload.get("sku", product.sku), current_id=product.id)
@@ -350,7 +365,7 @@ def unpublish_product(db: Session, product_id: int) -> Product:
 def duplicate_product(db: Session, product_id: int, user_id: int | None) -> Product:
     original = get_product(db, product_id)
     copy = Product(public_id=uuid4().hex, created_by_id=user_id, updated_by_id=user_id)
-    for field in ["name", "short_description", "description", "brand_id", "category_id", "product_type", "audience", "price", "stock_quantity"]:
+    for field in ["name", "short_description", "description", "brand_id", "category_id", "sneaker_model_id", "product_type", "audience", "price", "stock_quantity"]:
         setattr(copy, field, getattr(original, field))
     copy.slug = unique_slug(db, Product, f"{original.slug}-copia")
     copy.status = "draft"
@@ -430,6 +445,7 @@ def serialize_public_product(product: Product) -> dict:
         "categoryId": product.category.slug if product.category else "",
         "brand": product.brand.name if product.brand else "",
         "brandId": product.brand.slug if product.brand else "",
+        "model": product.sneaker_model.name if product.sneaker_model else "",
         "modelId": product.sneaker_model.slug if product.sneaker_model else "",
         "collectionId": collection_ids[0] if collection_ids else "",
         "collectionIds": collection_ids,
